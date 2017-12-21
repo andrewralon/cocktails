@@ -1,0 +1,54 @@
+﻿@model Take02.Models.Ingredient
+
+@{
+    ViewData["Title"] = "Ingredient Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ingredient</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RecipeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ComponentId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComponentId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UnitId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
