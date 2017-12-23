@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Take02.Models;
+using Take02.ViewModels;
 
 namespace Take02.Controllers
 {
@@ -21,12 +22,8 @@ namespace Take02.Controllers
         // GET: Ingredients
         public async Task<IActionResult> Index()
         {
-            var ingredients = await _context.Ingredient
-                .Include(t => t.Recipe)
-                .Include(t => t.Component)
-                .Include(t => t.Unit)
-                .ToListAsync();
-            return View(ingredients);
+            var model = await Helper.GetIngredientViewModelsAsync(_context);
+            return View(model);
         }
 
         // GET: Ingredients/Details/5
@@ -37,20 +34,18 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var ingredient = await _context.Ingredient
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-
-            return View(ingredient);
+            var model = await Helper.GetIngredientViewModelAsync(_context, id.Value);
+            return View(model);
         }
 
         // GET: Ingredients/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new IngredientViewModel();
+            model.RecipeSelectListItems = Helper.GetRecipeSelectListItems(_context);
+            model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
+            model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
+            return View(model);
         }
 
         // POST: Ingredients/Create
@@ -78,12 +73,11 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var ingredient = await _context.Ingredient.SingleOrDefaultAsync(m => m.Id == id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-            return View(ingredient);
+            var model = await Helper.GetIngredientViewModelAsync(_context, id.Value);
+            model.RecipeSelectListItems = Helper.GetRecipeSelectListItems(_context);
+            model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
+            model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
+            return View(model);
         }
 
         // POST: Ingredients/Edit/5
@@ -129,14 +123,8 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var ingredient = await _context.Ingredient
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-
-            return View(ingredient);
+            var model = await Helper.GetIngredientViewModelAsync(_context, id.Value);
+            return View(model);
         }
 
         // POST: Ingredients/Delete/5

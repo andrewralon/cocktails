@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Take02.Models.Ingredient>
+﻿@model IEnumerable<Take02.ViewModels.IngredientViewModel>
 
 @{
     ViewData["Title"] = "Ingredients";
@@ -13,19 +13,19 @@
     <thead>
         <tr>
             <th>
-                Recipe @Html.DisplayNameFor(model => model.Recipe.Name)
+                Recipe @*@Html.DisplayNameFor(model => model.Recipe.Name)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                Unit @Html.DisplayNameFor(model => model.Unit.Name)
+                Unit @*@Html.DisplayNameFor(model => model.Unit.Name)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Component.Name)
+                Component @*@Html.DisplayNameFor(model => model.Component.Name)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Number)
+                Number @*@Html.DisplayNameFor(model => model.Number)*@
             </th>
             <th></th>
         </tr>

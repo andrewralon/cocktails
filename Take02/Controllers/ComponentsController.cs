@@ -86,11 +86,6 @@ namespace Take02.Controllers
 
             var model = new ComponentViewModel(component);
             model.ComponentTypesSelectListItems = GetComponentTypesSelectListItems();
-
-            if (component == null)
-            {
-                return NotFound();
-            }
             return View(model);
         }
 
@@ -171,7 +166,6 @@ namespace Take02.Controllers
         {
             var componentTypes = await _context.ComponentType
                 .ToListAsync();
-
             return componentTypes;
         }
 
@@ -179,7 +173,6 @@ namespace Take02.Controllers
         {
             var componentTypes = _context.ComponentType
                 .ToList();
-
             return componentTypes;
         }
 

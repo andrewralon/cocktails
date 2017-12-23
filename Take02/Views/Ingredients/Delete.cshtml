@@ -1,4 +1,4 @@
-﻿@model Take02.Models.Ingredient
+﻿@model Take02.ViewModels.IngredientViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -12,16 +12,16 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.RecipeId)
+            RecipeName @*@Html.DisplayNameFor(model => model.Recipe.Name)*@
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.RecipeId)
+            @Html.DisplayFor(model => model.Recipe.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ComponentId)
+            ComponentName @*@Html.DisplayNameFor(model => model.Component.Name)*@
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ComponentId)
+            @Html.DisplayFor(model => model.Component.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Quantity)
@@ -30,10 +30,10 @@
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.UnitId)
+            UnitName @*@Html.DisplayNameFor(model => model.Unit.Name)*@
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.UnitId)
+            @Html.DisplayFor(model => model.Unit.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Number)

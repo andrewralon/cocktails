@@ -1,4 +1,4 @@
-﻿@model Take02.Models.Ingredient
+﻿@model Take02.ViewModels.IngredientViewModel
 
 @{
     ViewData["Title"] = "Ingredient Details";
@@ -17,16 +17,28 @@
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.RecipeId)
+            RecipeId @*@Html.DisplayNameFor(model => model.Recipe.Id)*@
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.RecipeId)
+            @Html.DisplayFor(model => model.Recipe.Id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ComponentId)
+            RecipeName @*@Html.DisplayNameFor(model => model.Recipe.Name)*@
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ComponentId)
+            @Html.DisplayFor(model => model.Recipe.Name)
+        </dd>
+        <dt>
+            ComponentId @*@Html.DisplayNameFor(model => model.Component.Id)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Component.Id)
+        </dd>
+        <dt>
+            ComponentName @*@Html.DisplayNameFor(model => model.Component.Name)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Component.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Quantity)
@@ -35,10 +47,16 @@
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.UnitId)
+            UnitId @*@Html.DisplayNameFor(model => model.Unit.Id)*@
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.UnitId)
+            @Html.DisplayFor(model => model.Unit.Id)
+        </dd>
+        <dt>
+            UnitName @*@Html.DisplayNameFor(model => model.Unit.Name)*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Number)
