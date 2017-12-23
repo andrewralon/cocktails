@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Take02.Models;
+using Take02.ViewModels;
 
 namespace Take02.Controllers
 {
@@ -23,7 +24,6 @@ namespace Take02.Controllers
         {
             var components = await _context.Component
                 .Include(t => t.ComponentType)
-                .Take(10)
                 .ToListAsync();
             return View(components);
         }
@@ -37,6 +37,7 @@ namespace Take02.Controllers
             }
 
             var component = await _context.Component
+                .Include(t => t.ComponentType)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (component == null)
             {
@@ -49,21 +50,10 @@ namespace Take02.Controllers
         // GET: Components/Create
         public IActionResult Create()
         {
-            //var model = new Component();
-            //var componentTypes = new List<SelectListItem>();
-            //foreach (var t in _context.ComponentType.ToList())
-            //{
-            //    componentTypes.Add(new SelectListItem
-            //    {
-            //        Value = t.Id.ToString(),
-            //        Text = t.Type
-            //    });
-            //}
-            ////model.ComponentTypes = componentTypes;
-            //ViewBag.ComponentTypes = componentTypes;
-            //var selectList = new SelectList(componentTypes, "Value", "Text");
-            //ViewBag.SelectList = selectList;
-            return View();
+            var model = new ComponentViewModel();
+            model.ComponentTypesSelectListItems = GetComponentTypesSelectListItems();
+
+            return View(model);
         }
 
         // POST: Components/Create
@@ -91,12 +81,17 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var component = await _context.Component.SingleOrDefaultAsync(m => m.Id == id);
+            var component = await _context.Component
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            var model = new ComponentViewModel(component);
+            model.ComponentTypesSelectListItems = GetComponentTypesSelectListItems();
+
             if (component == null)
             {
                 return NotFound();
             }
-            return View(component);
+            return View(model);
         }
 
         // POST: Components/Edit/5
@@ -157,7 +152,8 @@ namespace Take02.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var component = await _context.Component.SingleOrDefaultAsync(m => m.Id == id);
+            var component = await _context.Component
+                .SingleOrDefaultAsync(m => m.Id == id);
             _context.Component.Remove(component);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -168,24 +164,38 @@ namespace Take02.Controllers
             return _context.Component.Any(e => e.Id == id);
         }
 
-        //private ActionResult ListComponentTypes()
-        //{
-        //    var model = new ComponentTypesViewModel
-        //    {
-        //        ComponentTypes = GetComponentTypesSelectList()
-        //    };
-        //    return View(model);
-        //}
+        #region Helper Methods
 
-        //private IEnumerable<ComponentType> GetComponentTypes()
-        //{
-        //    var componentTypes = _context.ComponentType.ToAsyncEnumerable();
-        //    return componentTypes.ToEnumerable();
-        //}
 
-        //private IEnumerable<SelectListItem> GetComponentTypesSelectList()
-        //{
-        //    return new SelectList(GetComponentTypes(), "Id", "Type");
-        //}
+        private async Task<List<ComponentType>> GetComponentTypesAsync()
+        {
+            var componentTypes = await _context.ComponentType
+                .ToListAsync();
+
+            return componentTypes;
+        }
+
+        private List<ComponentType> GetComponentTypes()
+        {
+            var componentTypes = _context.ComponentType
+                .ToList();
+
+            return componentTypes;
+        }
+
+        private List<SelectListItem> GetComponentTypesSelectListItems()
+        {
+            var componentTypes = GetComponentTypes();
+
+            var items = componentTypes.ConvertAll(t => new SelectListItem()
+            {
+                Text = t.Type,
+                Value = t.Id.ToString()
+            });
+
+            return items;
+        }
+
+        #endregion Helper Methods
     }
 }

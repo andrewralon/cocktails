@@ -17,12 +17,6 @@
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ComponentTypeId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ComponentTypeId)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
@@ -33,6 +27,18 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ComponentType.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComponentType.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ComponentTypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComponentTypeId)
         </dd>
     </dl>
 </div>

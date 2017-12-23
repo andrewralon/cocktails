@@ -17,9 +17,6 @@ namespace Take02.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        //[NotMapped]
         public ComponentType ComponentType { get; set; }
-        //[NotMapped]
-        //public List<SelectListItem> ComponentTypes { get; set; }
     }
 }

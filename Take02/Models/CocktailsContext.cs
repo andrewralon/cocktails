@@ -16,8 +16,6 @@ namespace Take02.Models
         public DbSet<Ingredient> Ingredient { get; set; }
         public DbSet<Unit> Unit { get; set; }
 
-        //public DbSet<ComponentViewModel> ComponentViewModel { get; set; }
-
         public CocktailsContext(DbContextOptions<CocktailsContext> options)
             : base(options)
         {
@@ -45,8 +43,6 @@ namespace Take02.Models
 
             modelBuilder.Entity<Ingredient>()
                 .HasOne(a => a.Unit);
-
-            //modelBuilder.Ignore<ComponentViewModel>();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Take02.Models.Component
+﻿@model Take02.ViewModels.ComponentViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,15 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ComponentType.Type" class="control-label"></label>
-                <input asp-for="ComponentType.Type" class="form-control" />
-                <span asp-validation-for="ComponentType.Type" class="text-danger"></span>
-
-                @*<label asp-for="ComponentTypeId" class="control-label"></label>
-                @Html.DropDownList("ComponentType.Id", (SelectList)@ViewBag.SelectList, "-select-", null)
-                //@Html.DropDownListFor(model => model.ComponentTypeId, new SelectList(Model.ComponentTypeId.ToString(), Model.ComponentType.Type))
-                <input asp-for="ComponentTypeId" class="form-control" />
-                <span asp-validation-for="ComponentTypeId" class="text-danger"></span>*@
+                <label asp-for="ComponentTypeId" class="control-label"></label>
+                @Html.DropDownList("ComponentTypeId", Model.ComponentTypesSelectListItems, null, new { @class = "form-control" })
+                <span asp-validation-for="ComponentTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
