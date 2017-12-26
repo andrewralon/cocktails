@@ -20,12 +20,10 @@ namespace Take02.Controllers
             return component;
         }
 
-        public static Component GetComponent(CocktailsContext _context, Guid componentId)
-        {
-            var component = _context.Component
-                .SingleOrDefault(m => m.Id == componentId);
-            return component;
-        }
+        //public static Component GetComponent(CocktailsContext _context, Guid componentId)
+        //{
+        //    return GetComponentAsync(_context, componentId).Result;
+        //}
 
         public static async Task<List<Component>> GetComponentsAsync(CocktailsContext _context)
         {
@@ -46,12 +44,10 @@ namespace Take02.Controllers
             return componentType;
         }
 
-        public static ComponentType GetComponentType(CocktailsContext _context, int componentTypeId)
-        {
-            var componentType = _context.ComponentType
-                .SingleOrDefault(m => m.Id == componentTypeId);
-            return componentType;
-        }
+        //public static ComponentType GetComponentType(CocktailsContext _context, int componentTypeId)
+        //{
+        //    return GetComponentTypeAsync(_context, componentTypeId).Result;
+        //}
 
         public static async Task<List<ComponentType>> GetComponentTypesAsync(CocktailsContext _context)
         {
@@ -72,12 +68,10 @@ namespace Take02.Controllers
             return ingredient;
         }
 
-        public static Ingredient GetIngredient(CocktailsContext _context, Guid ingredientId)
-        {
-            var ingredient = _context.Ingredient
-                .SingleOrDefault(m => m.Id == ingredientId);
-            return ingredient;
-        }
+        //public static Ingredient GetIngredient(CocktailsContext _context, Guid ingredientId)
+        //{
+        //    return GetIngredientAsync(_context, ingredientId).Result;
+        //}
 
         public static async Task<List<Ingredient>> GetIngredientsAsync(CocktailsContext _context)
         {
@@ -88,24 +82,20 @@ namespace Take02.Controllers
 
         public static List<Ingredient> GetIngredients(CocktailsContext _context)
         {
-            var ingredients = _context.Ingredient
-                .ToList();
-            return ingredients;
+            return GetIngredientsAsync(_context).Result;
         }
 
-        public static async Task<Library> GetLibraryAsync(CocktailsContext _context, Guid libraryId)
-        {
-            var library = await _context.Library
-                .SingleOrDefaultAsync(m => m.Id == libraryId);
-            return library;
-        }
+        //public static async Task<Library> GetLibraryAsync(CocktailsContext _context, Guid libraryId)
+        //{
+        //    var library = await _context.Library
+        //        .SingleOrDefaultAsync(m => m.Id == libraryId);
+        //    return library;
+        //}
 
-        public static Library GetLibrary(CocktailsContext _context, Guid libraryId)
-        {
-            var library = _context.Library
-                .SingleOrDefault(m => m.Id == libraryId);
-            return library;
-        }
+        //public static Library GetLibrary(CocktailsContext _context, Guid libraryId)
+        //{
+        //    return GetLibraryAsync(_context, libraryId).Result;
+        //}
 
         public static async Task<Recipe> GetRecipeAsync(CocktailsContext _context, Guid recipeId)
         {
@@ -114,12 +104,10 @@ namespace Take02.Controllers
             return recipe;
         }
 
-        public static Recipe GetRecipe(CocktailsContext _context, Guid recipeId)
-        {
-            var recipe = _context.Recipe
-                .SingleOrDefault(m => m.Id == recipeId);
-            return recipe;
-        }
+        //public static Recipe GetRecipe(CocktailsContext _context, Guid recipeId)
+        //{
+        //    return GetRecipeAsync(_context, recipeId).Result;
+        //}
 
         public static async Task<List<Recipe>> GetRecipesAsync(CocktailsContext _context)
         {
@@ -140,12 +128,10 @@ namespace Take02.Controllers
             return unit;
         }
 
-        public static Unit GetUnit(CocktailsContext _context, int unitId)
-        {
-            var unit = _context.Unit
-                .SingleOrDefault(m => m.Id == unitId);
-            return unit;
-        }
+        //public static Unit GetUnit(CocktailsContext _context, int unitId)
+        //{
+        //    return GetUnitAsync(_context, unitId).Result;
+        //}
 
         public static async Task<List<Unit>> GetUnitsAsync(CocktailsContext _context)
         {
@@ -163,6 +149,26 @@ namespace Take02.Controllers
 
         #region ViewModel Methods
 
+        public static async Task<ComponentViewModel> GetComponentViewModelAsync(CocktailsContext _context, Guid id)
+        {
+            var component = await GetComponentAsync(_context, id);
+
+            var componentType = await GetComponentTypeAsync(_context, component.ComponentTypeId);
+
+            var model = new ComponentViewModel(component, componentType);
+
+            return model;
+        }
+
+        public static async Task<List<ComponentViewModel>> GetComponentViewModelsAsync(CocktailsContext _context)
+        {
+            var components = await GetComponentsAsync(_context);
+
+            var models = components.Select(t => GetComponentViewModelAsync(_context, t.Id).Result).ToList();
+
+            return models;
+        }
+
         public static async Task<IngredientViewModel> GetIngredientViewModelAsync(CocktailsContext _context, Guid id)
         {
             var ingredient = await GetIngredientAsync(_context, id);
@@ -173,43 +179,43 @@ namespace Take02.Controllers
 
             var unit = await GetUnitAsync(_context, ingredient.UnitId);
 
-            var ingredientViewModel = new IngredientViewModel(ingredient, recipe, component, unit);
+            var model = new IngredientViewModel(ingredient, recipe, component, unit);
 
-            return ingredientViewModel;
+            return model;
         }
 
-        public static IngredientViewModel GetIngredientViewModel(CocktailsContext _context, Guid id)
-        {
-            var ingredient = GetIngredient(_context, id);
+        //public static IngredientViewModel GetIngredientViewModel(CocktailsContext _context, Guid id)
+        //{
+        //    var ingredient = GetIngredient(_context, id);
 
-            var recipe = GetRecipe(_context, ingredient.RecipeId);
+        //    var recipe = GetRecipe(_context, ingredient.RecipeId);
 
-            var component = GetComponent(_context, ingredient.ComponentId);
+        //    var component = GetComponent(_context, ingredient.ComponentId);
 
-            var unit = GetUnit(_context, ingredient.UnitId);
+        //    var unit = GetUnit(_context, ingredient.UnitId);
 
-            var ingredientViewModel = new IngredientViewModel(ingredient, recipe, component, unit);
+        //    var model = new IngredientViewModel(ingredient, recipe, component, unit);
 
-            return ingredientViewModel;
-        }
+        //    return model;
+        //}
 
         public static async Task<List<IngredientViewModel>> GetIngredientViewModelsAsync(CocktailsContext _context)
         {
             var ingredients = await GetIngredientsAsync(_context);
 
-            var ingredientViewModels = ingredients.Select(t => GetIngredientViewModelAsync(_context, t.Id).Result).ToList();
+            var models = ingredients.Select(t => GetIngredientViewModelAsync(_context, t.Id).Result).ToList();
 
-            return ingredientViewModels;
+            return models;
         }
 
-        public static List<IngredientViewModel> GetIngredientViewModels(CocktailsContext _context)
-        {
-            var ingredients = GetIngredients(_context);
+        //public static List<IngredientViewModel> GetIngredientViewModels(CocktailsContext _context)
+        //{
+        //    var ingredients = GetIngredients(_context);
 
-            var ingredientViewModels = ingredients.Select(t => GetIngredientViewModel(_context, t.Id)).ToList();
+        //    var models = ingredients.Select(t => GetIngredientViewModel(_context, t.Id)).ToList();
 
-            return ingredientViewModels;
-        }
+        //    return models;
+        //}
 
         #endregion ViewModel Methods
 

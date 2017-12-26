@@ -23,7 +23,9 @@ namespace Take02.ViewModels
         public int Number { get; set; }
 
         public List<SelectListItem> ComponentSelectListItems { get; set; }
+
         public List<SelectListItem> RecipeSelectListItems { get; set; }
+
         public List<SelectListItem> UnitSelectListItems { get; set; }
 
         public IngredientViewModel()

@@ -1,4 +1,4 @@
-﻿@model Take02.Models.Component
+﻿@model Take02.ViewModels.ComponentViewModel
 
 @{
     ViewData["Title"] = "Component Details";
@@ -29,16 +29,16 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ComponentType.Type)
+            Type @*@Html.DisplayNameFor(model => model.ComponentType.Type)*@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.ComponentType.Type)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ComponentTypeId)
+            TypeId @*@Html.DisplayNameFor(model => model.ComponentType.Id)*@
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ComponentTypeId)
+            @Html.DisplayFor(model => model.ComponentType.Id)
         </dd>
     </dl>
 </div>

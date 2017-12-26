@@ -22,10 +22,8 @@ namespace Take02.Controllers
         // GET: Components
         public async Task<IActionResult> Index()
         {
-            var components = await _context.Component
-                .Include(t => t.ComponentType)
-                .ToListAsync();
-            return View(components);
+            var models = await Helper.GetComponentViewModelsAsync(_context);
+            return View(models);
         }
 
         // GET: Components/Details/5
@@ -36,23 +34,15 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var component = await _context.Component
-                .Include(t => t.ComponentType)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (component == null)
-            {
-                return NotFound();
-            }
-
-            return View(component);
+            var model = await Helper.GetComponentViewModelAsync(_context, id.Value);
+            return View(model);
         }
 
         // GET: Components/Create
         public IActionResult Create()
         {
             var model = new ComponentViewModel();
-            model.ComponentTypesSelectListItems = GetComponentTypesSelectListItems();
-
+            model.ComponentTypesSelectListItems = Helper.GetComponentTypeSelectListItems(_context);
             return View(model);
         }
 
@@ -81,11 +71,8 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var component = await _context.Component
-                .SingleOrDefaultAsync(m => m.Id == id);
-
-            var model = new ComponentViewModel(component);
-            model.ComponentTypesSelectListItems = GetComponentTypesSelectListItems();
+            var model = await Helper.GetComponentViewModelAsync(_context, id.Value);
+            model.ComponentTypesSelectListItems = Helper.GetComponentTypeSelectListItems(_context);
             return View(model);
         }
 
@@ -132,14 +119,8 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var component = await _context.Component
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (component == null)
-            {
-                return NotFound();
-            }
-
-            return View(component);
+            var model = await Helper.GetComponentViewModelAsync(_context, id.Value);
+            return View(model);
         }
 
         // POST: Components/Delete/5
@@ -158,37 +139,5 @@ namespace Take02.Controllers
         {
             return _context.Component.Any(e => e.Id == id);
         }
-
-        #region Helper Methods
-
-
-        private async Task<List<ComponentType>> GetComponentTypesAsync()
-        {
-            var componentTypes = await _context.ComponentType
-                .ToListAsync();
-            return componentTypes;
-        }
-
-        private List<ComponentType> GetComponentTypes()
-        {
-            var componentTypes = _context.ComponentType
-                .ToList();
-            return componentTypes;
-        }
-
-        private List<SelectListItem> GetComponentTypesSelectListItems()
-        {
-            var componentTypes = GetComponentTypes();
-
-            var items = componentTypes.ConvertAll(t => new SelectListItem()
-            {
-                Text = t.Type,
-                Value = t.Id.ToString()
-            });
-
-            return items;
-        }
-
-        #endregion Helper Methods
     }
 }

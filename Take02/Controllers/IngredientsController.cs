@@ -132,7 +132,8 @@ namespace Take02.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var ingredient = await _context.Ingredient.SingleOrDefaultAsync(m => m.Id == id);
+            var ingredient = await _context.Ingredient
+                .SingleOrDefaultAsync(m => m.Id == id);
             _context.Ingredient.Remove(ingredient);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

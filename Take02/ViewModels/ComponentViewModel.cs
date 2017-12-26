@@ -9,31 +9,26 @@ using Take02.Models;
 
 namespace Take02.ViewModels
 {
-    [NotMapped]
     public class ComponentViewModel
     {
         public Guid Id { get; set; }
 
-        [Required, Display(Name = "Type")]
-        public int ComponentTypeId { get; set; }
+        public ComponentType ComponentType { get; set; }
 
-        [Required, Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [NotMapped]
         public List<SelectListItem> ComponentTypesSelectListItems { get; set; }
 
         public ComponentViewModel()
         {
         }
 
-        public ComponentViewModel(Component component)
+        public ComponentViewModel(Component component, ComponentType componentType)
         {
             Id = component.Id;
-            ComponentTypeId = component.ComponentTypeId;
+            ComponentType = componentType;
             Name = component.Name;
             Description = component.Description;
         }
