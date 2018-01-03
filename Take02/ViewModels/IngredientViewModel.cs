@@ -28,6 +28,8 @@ namespace Take02.ViewModels
 
         public List<SelectListItem> UnitSelectListItems { get; set; }
 
+        public string IngredientText { get; set; }
+
         public IngredientViewModel()
         {
         }
@@ -44,6 +46,7 @@ namespace Take02.ViewModels
             Quantity = ingredient.Quantity;
             Unit = unit;
             Number = ingredient.Number;
+            IngredientText = string.Format("{0} {1} {2}", Quantity, Unit.Name, Component.Name);
         }
     }
 }

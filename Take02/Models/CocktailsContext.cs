@@ -27,22 +27,22 @@ namespace Take02.Models
                 .Property(b => b.Name)
                 .IsRequired();
 
-            modelBuilder.Entity<Recipe>()
-                .HasOne(a => a.Library)
-                .WithMany(b => b.Recipes);
+            //modelBuilder.Entity<Recipe>()
+            //    .HasOne(a => a.Library)
+            //    .WithMany(b => b.Recipes);
 
-            modelBuilder.Entity<Component>()
-                .HasOne(a => a.ComponentType);
+            //modelBuilder.Entity<Component>()
+            //    .HasOne(a => a.ComponentType);
 
-            modelBuilder.Entity<Ingredient>()
-                .HasOne(a => a.Recipe)
-                .WithMany(b => b.Ingredients);
+            //modelBuilder.Entity<Ingredient>()
+            //    .HasOne(a => a.Recipe)
+            //    .WithMany(b => b.Ingredients);
 
-            modelBuilder.Entity<Ingredient>()
-                .HasOne(a => a.Component);
+            //modelBuilder.Entity<Ingredient>()
+            //    .HasOne(a => a.Component);
 
-            modelBuilder.Entity<Ingredient>()
-                .HasOne(a => a.Unit);
+            //modelBuilder.Entity<Ingredient>()
+            //    .HasOne(a => a.Unit);
         }
     }
 }

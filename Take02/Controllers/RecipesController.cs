@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Take02.Models;
+using Take02.ViewModels;
 
 namespace Take02.Controllers
 {
@@ -19,17 +20,10 @@ namespace Take02.Controllers
         }
 
         // GET: Recipes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool showIngredients = false)
         {
-            var recipes = await _context.Recipe
-                .Include(t => t.Ingredients)
-                    .ThenInclude(a => a.Component)
-                .Include(t => t.Ingredients)
-                    .ThenInclude(b => b.Unit)
-                .Include(t => t.Library)
-                .Take(10)
-                .ToListAsync();
-            return View(recipes);
+            var models = await Helper.GetRecipeViewModelsAsync(_context, showIngredients);
+            return View(models);
         }
 
         // GET: Recipes/Details/5
@@ -40,20 +34,20 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (recipe == null)
-            {
-                return NotFound();
-            }
-
-            return View(recipe);
+            var model = await Helper.GetRecipeViewModelAsync(_context, id.Value, true);
+            return View(model);
         }
 
         // GET: Recipes/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new RecipeViewModel();
+            model.LibrarySelectListItems = Helper.GetLibrarySelectListItems(_context);
+            model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
+            model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
+            model.IngredientViewModels = new List<IngredientViewModel>();
+            model.IngredientViewModels.Add(new IngredientViewModel());
+            return View(model);
         }
 
         // POST: Recipes/Create
@@ -81,12 +75,11 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe.SingleOrDefaultAsync(m => m.Id == id);
-            if (recipe == null)
-            {
-                return NotFound();
-            }
-            return View(recipe);
+            var model = await Helper.GetRecipeViewModelAsync(_context, id.Value, true);
+            model.LibrarySelectListItems = Helper.GetLibrarySelectListItems(_context);
+            model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
+            model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
+            return View(model);
         }
 
         // POST: Recipes/Edit/5
@@ -132,14 +125,9 @@ namespace Take02.Controllers
                 return NotFound();
             }
 
-            var recipe = await _context.Recipe
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (recipe == null)
-            {
-                return NotFound();
-            }
+            var model = await Helper.GetRecipeViewModelAsync(_context, id.Value, true);
 
-            return View(recipe);
+            return View(model);
         }
 
         // POST: Recipes/Delete/5
@@ -147,7 +135,10 @@ namespace Take02.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var recipe = await _context.Recipe.SingleOrDefaultAsync(m => m.Id == id);
+            var recipe = await _context.Recipe
+                .SingleOrDefaultAsync(m => m.Id == id);
+            var ingredients = await Helper.GetIngredientsByRecipeAsync(_context, id);
+            ingredients.ForEach(t => _context.Ingredient.Remove(t));
             _context.Recipe.Remove(recipe);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -22,8 +22,8 @@ namespace Take02.Controllers
         // GET: Ingredients
         public async Task<IActionResult> Index()
         {
-            var model = await Helper.GetIngredientViewModelsAsync(_context);
-            return View(model);
+            var models = await Helper.GetIngredientViewModelsAsync(_context);
+            return View(models);
         }
 
         // GET: Ingredients/Details/5

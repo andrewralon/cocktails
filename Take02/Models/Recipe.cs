@@ -9,15 +9,16 @@ namespace Take02.Models
     public class Recipe
     {
         public Guid Id { get; set; }
+
         [Required]
         public Guid LibraryId { get; set; }
+
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string Instructions { get; set; }
-        public string Source { get; set; }
 
-        public Library Library { get; set; }
-        public List<Ingredient> Ingredients { get; set; }
+        public string Source { get; set; }
     }
 }

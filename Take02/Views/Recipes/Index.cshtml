@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Take02.Models.Recipe>
+﻿@model IEnumerable<Take02.ViewModels.RecipeViewModel>
 
 @{
     ViewData["Title"] = "Recipes";
@@ -7,7 +7,7 @@
 <h2>Recipes</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> | @Html.ActionLink("Show/Hide Ingredients", "Index", "Recipes", new { ShowIngredients = !Model.FirstOrDefault().ShowIngredients }, null)
 </p>
 <table class="table">
     <thead>
@@ -15,14 +15,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                Library@*@Html.DisplayNameFor(model => model.Library.Name)*@
-            </th>
-            <th>
-                Ingredients@*@Html.DisplayNameFor(model => model.Name)*@
-            </th>
+            @if (Model.FirstOrDefault().ShowIngredients)
+            {
+                <th>
+                    Ingredients
+                </th>
+            }
             <th>
                 @Html.DisplayNameFor(model => model.Instructions)
+            </th>
+            <th>
+                Library
             </th>
             <th></th>
         </tr>
@@ -34,19 +37,21 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Library.Name)
-                </td>
-                <td>
-                    @foreach (var ingredient in item.Ingredients.OrderBy(x => x.Number))
-                    {
-                        <p>
-                            @Html.DisplayFor(modelItem => ingredient.Quantity) @Html.DisplayFor(modelItem => ingredient.Unit.Name) @Html.DisplayFor(modelItem => ingredient.Component.Name)
-                        </p>
-                    }
-                </td>
+                @if (item.ShowIngredients)
+                {
+                    <td>
+                        @foreach (var ingredientVM in item.IngredientViewModels)
+                        {
+                            @Html.DisplayFor(modelItem => ingredientVM.IngredientText)
+                            <br />
+                        }
+                    </td>
+                }
                 <td>
                     @Html.DisplayFor(modelItem => item.Instructions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Library.Name)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

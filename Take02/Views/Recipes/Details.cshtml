@@ -1,4 +1,4 @@
-﻿@model Take02.Models.Recipe
+﻿@model Take02.ViewModels.RecipeViewModel
 
 @{
     ViewData["Title"] = "Recipe Details";
@@ -11,22 +11,32 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Id)
+            RecipeId
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LibraryId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LibraryId)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            Library
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Library.Name)
+        </dd>
+        <dt>
+            Ingredients
+        </dt>
+        <dd>
+            @foreach (var ingredientVM in Model.IngredientViewModels)
+            {
+                @Html.DisplayFor(modelItem => ingredientVM.IngredientText)
+                <br />
+            }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Instructions)
