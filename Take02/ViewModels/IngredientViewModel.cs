@@ -32,6 +32,9 @@ namespace Take02.ViewModels
 
         public IngredientViewModel()
         {
+            ComponentSelectListItems = new List<SelectListItem>();
+            RecipeSelectListItems = new List<SelectListItem>();
+            UnitSelectListItems = new List<SelectListItem>();
         }
 
         public IngredientViewModel(
@@ -39,6 +42,7 @@ namespace Take02.ViewModels
             Recipe recipe, 
             Component component,
             Unit unit)
+            : base()
         {
             Id = ingredient.Id;
             Recipe = recipe;

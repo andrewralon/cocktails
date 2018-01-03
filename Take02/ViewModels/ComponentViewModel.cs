@@ -23,9 +23,11 @@ namespace Take02.ViewModels
 
         public ComponentViewModel()
         {
+            ComponentTypesSelectListItems = new List<SelectListItem>();
         }
 
         public ComponentViewModel(Component component, ComponentType componentType)
+            : base()
         {
             Id = component.Id;
             ComponentType = componentType;

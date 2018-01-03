@@ -19,11 +19,11 @@ namespace Take02.ViewModels
 
         public string Source { get; set; }
 
-        public List<SelectListItem> LibrarySelectListItems { get; set; }
-
         public List<IngredientViewModel> IngredientViewModels { get; set; }
 
         public List<SelectListItem> ComponentSelectListItems { get; set; }
+
+        public List<SelectListItem> LibrarySelectListItems { get; set; }
 
         public List<SelectListItem> UnitSelectListItems { get; set; }
 
@@ -31,9 +31,14 @@ namespace Take02.ViewModels
 
         public RecipeViewModel()
         {
+            IngredientViewModels = new List<IngredientViewModel>();
+            ComponentSelectListItems = new List<SelectListItem>();
+            LibrarySelectListItems = new List<SelectListItem>();
+            UnitSelectListItems = new List<SelectListItem>();
         }
 
         public RecipeViewModel(Recipe recipe, Library library)
+            : base()
         {
             Id = recipe.Id;
             Library = library;
