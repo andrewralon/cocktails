@@ -299,7 +299,7 @@ namespace Take02.Controllers
 
             var items = componentTypes.ConvertAll(t => new SelectListItem()
             {
-                Text = t.Type,
+                Text = t.Name,
                 Value = t.Id.ToString()
             });
 

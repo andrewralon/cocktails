@@ -53,7 +53,7 @@ namespace Take02.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Type")] ComponentType componentType)
+        public async Task<IActionResult> Create([Bind("Id,Name")] ComponentType componentType)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Take02.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Type")] ComponentType componentType)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ComponentType componentType)
         {
             if (id != componentType.Id)
             {
