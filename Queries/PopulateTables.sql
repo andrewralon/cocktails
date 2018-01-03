@@ -4,7 +4,7 @@ USE cocktails;
 INSERT INTO Library(Name) VALUES ('Death & Co');
 
 --DELETE FROM ComponentType;
-INSERT INTO ComponentType(Type) VALUES 
+INSERT INTO ComponentType(Name) VALUES 
 	('Absinthe'),
 	('Agave'),
 	('Bitter'),
@@ -40,6 +40,7 @@ INSERT INTO Unit(Name) VALUES
 	('bar spoon'),
 	('pinch');
 
+--DELETE FROM Component;
 INSERT INTO Component(ComponentTypeId, Name) VALUES
 	(15, 'Ron del Barrilito 3-Star Rum'),
 	(11, 'Lime Juice'),
@@ -48,4 +49,3 @@ INSERT INTO Component(ComponentTypeId, Name) VALUES
 
 --INSERT INTO Recipe(LibraryId, Name, Instructions) VALUES
 --	('', 'Airmail', 'Shake all the ingredients (except the champagne) with ice, then strain into a flute. Top with champagne. No garnish');
-

@@ -1,3 +1,3 @@
 USE cocktails;
 
-sp_rename 'ComponentType.Type', 'Name', 'COLUMN';
+EXEC sp_rename 'ComponentType.Type', 'Name', 'COLUMN';
