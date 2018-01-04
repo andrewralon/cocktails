@@ -28,6 +28,7 @@ namespace Take02.Controllers
         public static async Task<List<Component>> GetComponentsAsync(CocktailsContext _context)
         {
             var components = await _context.Component
+                .OrderBy(t => t.Name)
                 .ToListAsync();
             return components;
         }
@@ -52,6 +53,7 @@ namespace Take02.Controllers
         public static async Task<List<ComponentType>> GetComponentTypesAsync(CocktailsContext _context)
         {
             var componentTypes = await _context.ComponentType
+                .OrderBy(t => t.Name)
                 .ToListAsync();
             return componentTypes;
         }
@@ -76,6 +78,7 @@ namespace Take02.Controllers
         public static async Task<List<Ingredient>> GetIngredientsAsync(CocktailsContext _context)
         {
             var ingredients = await _context.Ingredient
+                .OrderBy(t => t.Number)
                 .ToListAsync();
             return ingredients;
         }
@@ -165,6 +168,7 @@ namespace Take02.Controllers
         public static async Task<List<Recipe>> GetRecipesAsync(CocktailsContext _context)
         {
             var recipes = await _context.Recipe
+                .OrderBy(t => t.Name)
                 .ToListAsync();
             return recipes;
         }
@@ -241,7 +245,7 @@ namespace Take02.Controllers
         {
             var ingredients = await GetIngredientsAsync(_context);
 
-            var models = ingredients.Select(t => GetIngredientViewModelAsync(_context, t.Id).Result).ToList();
+            var models = ingredients.Select(t => GetIngredientViewModelAsync(_context, t.Id).Result).OrderBy(t => t.RecipeName).ToList();
 
             return models;
         }
