@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var modelCount = Model.IngredientViewModels.Count;
 }
 
 <h2>Create</h2>
@@ -16,14 +17,20 @@
             <div class="form-group">
                 <label class="control-label">Library*</label>
                 @Html.DropDownList("LibraryId", Model.LibrarySelectListItems, null, new { @class = "form-control" })
-                <span asp-validation-for="Library.Id" class="text-danger"></span>
+                @*@Html.DropDownList("LibraryId", new SelectList(Model.LibrarySelectListItems, "Value", "Text"), null, new { @class = "form-control" })*@
+                <span asp-validation-for="LibraryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Name*</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            @{ int count = Model.IngredientViewModels.Count; }
+            <div class="form-group">
+                <label class="control-label">MixType*</label>
+                @Html.DropDownList("MixTypeId", Model.MixTypeSelectListItems, null, new { @class = "form-control" })
+                @*@Html.DropDownList("MixTypeId", new SelectList(Model.MixTypeSelectListItems, "Value", "Text"), null, new { @class = "form-control" })*@
+                <span asp-validation-for="MixTypeId" class="text-danger"></span>
+            </div>
             @foreach (var ingredientVM in Model.IngredientViewModels)
             {
                 <hr />
@@ -36,11 +43,11 @@
                     <br />
                     <label class="control-label">Unit</label>
                     @Html.DropDownList("UnitId", Model.UnitSelectListItems, Model.UnitSelectListItems.ElementAtOrDefault(1).Text, new { @class = "form-control" })
-                    <span asp-validation-for="@ingredientVM.Unit.Id" class="text-danger"></span>
+                    <span asp-validation-for="@ingredientVM.UnitId" class="text-danger"></span>
                     <br />
                     <label class="control-label">Component*</label>
                     @Html.DropDownList("ComponentId", Model.ComponentSelectListItems, null, new { @class = "form-control" })
-                    <span asp-validation-for="@ingredientVM.Component.Id" class="text-danger"></span>
+                    <span asp-validation-for="@ingredientVM.ComponentId" class="text-danger"></span>
                     <span asp-validation-for="IngredientViewModels" class="text-danger"></span>
                     @{
                         int index = Model.IngredientViewModels.IndexOf(ingredientVM);
@@ -49,12 +56,12 @@
                             <br />
                             <a asp-action="MoveUp">Move Up</a>
                         }
-                        if (index < count - 1)
+                        if (index < modelCount - 1)
                         {
                             <br />
                             <a asp-action="MoveDown">Move Down</a>
                         }
-                        if (index == count - 1)
+                        if (index == modelCount - 1)
                         {
                             <br />
                             <a id="addIngredient" href="#">Add Ingredient</a>

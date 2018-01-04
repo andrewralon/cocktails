@@ -11,9 +11,15 @@ namespace Take02.ViewModels
     {
         public Guid Id { get; set; }
 
-        public Library Library { get; set; }
+        public Guid LibraryId { get; set; }
+
+        public string LibraryName { get; set; }
 
         public string Name { get; set; }
+
+        public int MixTypeId { get; set; }
+
+        public string MixTypeName { get; set; }
 
         public string Instructions { get; set; }
 
@@ -25,6 +31,8 @@ namespace Take02.ViewModels
 
         public List<SelectListItem> LibrarySelectListItems { get; set; }
 
+        public List<SelectListItem> MixTypeSelectListItems { get; set; }
+
         public List<SelectListItem> UnitSelectListItems { get; set; }
 
         public bool ShowIngredients { get; set; }
@@ -34,15 +42,19 @@ namespace Take02.ViewModels
             IngredientViewModels = new List<IngredientViewModel>();
             ComponentSelectListItems = new List<SelectListItem>();
             LibrarySelectListItems = new List<SelectListItem>();
+            MixTypeSelectListItems = new List<SelectListItem>();
             UnitSelectListItems = new List<SelectListItem>();
         }
 
-        public RecipeViewModel(Recipe recipe, Library library)
+        public RecipeViewModel(Recipe recipe, Library library, MixType mixType)
             : base()
         {
             Id = recipe.Id;
-            Library = library;
+            LibraryId = library.Id;
+            LibraryName = library.Name;
             Name = recipe.Name;
+            MixTypeId = mixType.Id;
+            MixTypeName = mixType.Name;
             Instructions = recipe.Instructions;
             Source = recipe.Source;
         }

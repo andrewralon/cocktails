@@ -17,28 +17,16 @@
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt>
-            RecipeId @*@Html.DisplayNameFor(model => model.Recipe.Id)*@
+            Recipe
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Recipe.Id)
+            @Html.DisplayFor(model => model.RecipeName)
         </dd>
         <dt>
-            RecipeName @*@Html.DisplayNameFor(model => model.Recipe.Name)*@
+            Component
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Recipe.Name)
-        </dd>
-        <dt>
-            ComponentId @*@Html.DisplayNameFor(model => model.Component.Id)*@
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Component.Id)
-        </dd>
-        <dt>
-            ComponentName @*@Html.DisplayNameFor(model => model.Component.Name)*@
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Component.Name)
+            @Html.DisplayFor(model => model.ComponentName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Quantity)
@@ -47,16 +35,10 @@
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
-            UnitId @*@Html.DisplayNameFor(model => model.Unit.Id)*@
+            Unit
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Unit.Id)
-        </dd>
-        <dt>
-            UnitName @*@Html.DisplayNameFor(model => model.Unit.Name)*@
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Unit.Name)
+            @Html.DisplayFor(model => model.UnitName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Number)

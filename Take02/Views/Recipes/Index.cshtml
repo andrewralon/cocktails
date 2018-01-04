@@ -2,19 +2,22 @@
 
 @{
     ViewData["Title"] = "Recipes";
-    var showIngredients = Model.Count() > 0 && !Model.FirstOrDefault().ShowIngredients;
+    var showIngredients = Model.Count() > 0 && Model.FirstOrDefault().ShowIngredients;
 }
 
 <h2>Recipes</h2>
 
 <p>
-    <a asp-action="Create">Create New</a> | @Html.ActionLink("Show/Hide Ingredients", "Index", "Recipes", new { ShowIngredients = showIngredients }, null)
+    <a asp-action="Create">Create New</a> | @Html.ActionLink("Show/Hide Ingredients", "Index", "Recipes", new { ShowIngredients = !showIngredients }, null)
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                MixType
             </th>
             @if (showIngredients)
             {
@@ -38,6 +41,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MixTypeName)
+                </td>
                 @if (item.ShowIngredients)
                 {
                     <td>
@@ -52,7 +58,7 @@
                     @Html.DisplayFor(modelItem => item.Instructions)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Library.Name)
+                    @Html.DisplayFor(modelItem => item.LibraryName)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -12,13 +12,19 @@ namespace Take02.ViewModels
     {
         public Guid Id { get; set; }
 
-        public Recipe Recipe { get; set; }
+        public Guid RecipeId { get; set; }
 
-        public Component Component { get; set; }
+        public string RecipeName { get; set; }
+
+        public Guid ComponentId { get; set; }
+
+        public string ComponentName { get; set; }
 
         public string Quantity { get; set; }
 
-        public Unit Unit { get; set; }
+        public int UnitId { get; set; }
+
+        public string UnitName { get; set; }
 
         public int Number { get; set; }
 
@@ -28,7 +34,7 @@ namespace Take02.ViewModels
 
         public List<SelectListItem> UnitSelectListItems { get; set; }
 
-        public string IngredientText { get; set; }
+        public string IngredientText { get { return string.Format("{0} {1} {2}", Quantity, UnitName, ComponentName); } }
 
         public IngredientViewModel()
         {
@@ -45,12 +51,14 @@ namespace Take02.ViewModels
             : base()
         {
             Id = ingredient.Id;
-            Recipe = recipe;
-            Component = component;
+            RecipeId = recipe.Id;
+            RecipeName = recipe.Name;
+            ComponentId = component.Id;
+            ComponentName = component.Name;
             Quantity = ingredient.Quantity;
-            Unit = unit;
+            UnitId = unit.Id;
+            UnitName = unit.Name;
             Number = ingredient.Number;
-            IngredientText = string.Format("{0} {1} {2}", Quantity, Unit.Name, Component.Name);
         }
     }
 }

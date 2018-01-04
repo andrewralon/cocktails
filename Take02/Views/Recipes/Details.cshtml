@@ -11,7 +11,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            RecipeId
+            @Html.DisplayNameFor(model => model.Id)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Id)
@@ -26,7 +26,13 @@
             Library
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Library.Name)
+            @Html.DisplayFor(model => model.LibraryName)
+        </dd>
+        <dt>
+            MixType
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MixTypeName)
         </dd>
         <dt>
             Ingredients

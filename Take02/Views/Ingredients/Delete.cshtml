@@ -12,16 +12,16 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            RecipeName @*@Html.DisplayNameFor(model => model.Recipe.Name)*@
+            Recipe
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Recipe.Name)
+            @Html.DisplayFor(model => model.RecipeName)
         </dd>
         <dt>
-            ComponentName @*@Html.DisplayNameFor(model => model.Component.Name)*@
+            Component
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Component.Name)
+            @Html.DisplayFor(model => model.ComponentName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Quantity)
@@ -30,10 +30,10 @@
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt>
-            UnitName @*@Html.DisplayNameFor(model => model.Unit.Name)*@
+            Unit
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Unit.Name)
+            @Html.DisplayFor(model => model.UnitName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Number)

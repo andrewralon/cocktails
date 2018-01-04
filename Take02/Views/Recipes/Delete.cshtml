@@ -24,14 +24,26 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
+            Library
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LibraryName)
+        </dd>
+        <dt>
+            MixType
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MixTypeName)
+        </dd>
+        <dt>
             Ingredients
         </dt>
         <dd>
             @foreach (var ingredientVM in Model.IngredientViewModels)
-            {
-                @Html.DisplayFor(modelItem => ingredientVM.IngredientText)
-                <br />
-            }
+        {
+            @Html.DisplayFor(modelItem => ingredientVM.IngredientText)
+            <br />
+    }
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Instructions)
