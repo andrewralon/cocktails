@@ -15,13 +15,13 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label class="control-label">Recipe</label>
-                @Html.DropDownList("RecipeId", Model.RecipeSelectListItems, null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RecipeId, Model.RecipeSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="RecipeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Component</label>
-                @Html.DropDownList("ComponentId", Model.ComponentSelectListItems, null, new { @class = "form-control" })
-                <span asp-validation-for="ComponentId" class="text-danger"></span>
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
@@ -30,13 +30,13 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Unit</label>
-                @Html.DropDownList("UnitId", Model.UnitSelectListItems, null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.UnitId, Model.UnitSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="UnitId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Number" class="control-label"></label>
-                <input asp-for="Number" class="form-control" />
-                <span asp-validation-for="Number" class="text-danger"></span>
+                <label class="control-label">Component</label>
+                @Html.DropDownListFor(m => m.ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
+                <span asp-validation-for="ComponentId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

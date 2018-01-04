@@ -42,6 +42,7 @@ namespace Take02.Controllers
         public IActionResult Create()
         {
             var model = new RecipeViewModel();
+            model.IngredientViewModels.Add(new IngredientViewModel());
             model.LibrarySelectListItems = Helper.GetLibrarySelectListItems(_context);
             model.MixTypeSelectListItems = Helper.GetMixTypeSelectListItems(_context);
             model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);

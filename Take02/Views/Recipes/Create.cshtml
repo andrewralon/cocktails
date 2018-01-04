@@ -3,73 +3,76 @@
 @{
     ViewData["Title"] = "Create";
     var modelCount = Model.IngredientViewModels.Count;
+    var addIngredientShown = false;
 }
 
 <h2>Create</h2>
 
 <h4>Recipe</h4>
-<h5>* = required</h5>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">Library*</label>
-                @Html.DropDownList("LibraryId", Model.LibrarySelectListItems, null, new { @class = "form-control" })
-                @*@Html.DropDownList("LibraryId", new SelectList(Model.LibrarySelectListItems, "Value", "Text"), null, new { @class = "form-control" })*@
+                <label class="control-label">Library</label>
+                @Html.DropDownListFor(m => m.LibraryId, Model.LibrarySelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="LibraryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Name*</label>
+                <label class="control-label">Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">MixType*</label>
-                @Html.DropDownList("MixTypeId", Model.MixTypeSelectListItems, null, new { @class = "form-control" })
-                @*@Html.DropDownList("MixTypeId", new SelectList(Model.MixTypeSelectListItems, "Value", "Text"), null, new { @class = "form-control" })*@
+                <label class="control-label">MixType</label>
+                @Html.DropDownListFor(m => m.MixTypeId, Model.MixTypeSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="MixTypeId" class="text-danger"></span>
             </div>
-            @foreach (var ingredientVM in Model.IngredientViewModels)
-            {
+            <div class="form-group">
+                <label class="control-label">Ingredients</label>
                 <hr />
-                <div class="form-group">
-                    <label class="control-label">Ingredient</label>
-                    <br />
+                @foreach (var ingredientVM in Model.IngredientViewModels)
+                {
+                    <input type="hidden" asp-for="@ingredientVM.Number" />
                     <label class="control-label">Quantity</label>
                     <input asp-for="@ingredientVM.Quantity" class="form-control" />
                     <span asp-validation-for="@ingredientVM.Quantity" class="text-danger"></span>
                     <br />
                     <label class="control-label">Unit</label>
-                    @Html.DropDownList("UnitId", Model.UnitSelectListItems, Model.UnitSelectListItems.ElementAtOrDefault(1).Text, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => ingredientVM.UnitId, Model.UnitSelectListItems, Model.UnitSelectListItems.ElementAtOrDefault(1).Text, new { @class = "form-control" })
                     <span asp-validation-for="@ingredientVM.UnitId" class="text-danger"></span>
                     <br />
-                    <label class="control-label">Component*</label>
-                    @Html.DropDownList("ComponentId", Model.ComponentSelectListItems, null, new { @class = "form-control" })
+                    <label class="control-label">Component</label>
+                    @Html.DropDownListFor(m => ingredientVM.ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
                     <span asp-validation-for="@ingredientVM.ComponentId" class="text-danger"></span>
                     <span asp-validation-for="IngredientViewModels" class="text-danger"></span>
-                    @{
-                        int index = Model.IngredientViewModels.IndexOf(ingredientVM);
-                        if (index > 0)
-                        {
-                            <br />
-                            <a asp-action="MoveUp">Move Up</a>
-                        }
-                        if (index < modelCount - 1)
-                        {
-                            <br />
-                            <a asp-action="MoveDown">Move Down</a>
-                        }
-                        if (index == modelCount - 1)
-                        {
-                            <br />
-                            <a id="addIngredient" href="#">Add Ingredient</a>
-                        }
+                    int index = Model.IngredientViewModels.IndexOf(ingredientVM);
+                    if (index > 0)
+                    {
+                        <br />
+                        <a asp-action="MoveUp">Move Up</a>
                     }
-                </div>
+                    if (index < modelCount - 1)
+                    {
+                        <br />
+                        <a asp-action="MoveDown">Move Down</a>
+                    }
+                    if (index == modelCount - 1)
+                    {
+                        <br />
+                        <a id="addIngredient" href="#">Add Ingredient</a>
+                        addIngredientShown = true;
+                    }
+                    <hr />
+                }
+            </div>
+            @if (!addIngredientShown)
+            {
+                <a id="addIngredient" href="#">Add Ingredient</a>
+                <hr />
+                addIngredientShown = true;
             }
-            <hr />
             <div class="form-group">
                 <label asp-for="Instructions" class="control-label"></label>
                 <input asp-for="Instructions" class="form-control" />

@@ -16,27 +16,26 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label class="control-label">Library*</label>
+                <label class="control-label">Library</label>
                 @Html.DropDownListFor(m => m.LibraryId, Model.LibrarySelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="LibraryId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Name*</label>
+                <label class="control-label">Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">MixType*</label>
+                <label class="control-label">MixType</label>
                 @Html.DropDownListFor(m => m.MixTypeId, Model.MixTypeSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="MixTypeId" class="text-danger"></span>
             </div>
-            @foreach (var ingredientVM in Model.IngredientViewModels)
-            {
+            <div class="form-group">
+                <label class="control-label">Ingredients</label>
                 <hr />
-                <div class="form-group">
-                    <label class="control-label">Ingredient</label>
+                @foreach (var ingredientVM in Model.IngredientViewModels)
+                {
                     <input type="hidden" asp-for="@ingredientVM.Number" />
-                    <br />
                     <label class="control-label">Quantity</label>
                     <input asp-for="@ingredientVM.Quantity" class="form-control" />
                     <span asp-validation-for="@ingredientVM.Quantity" class="text-danger"></span>
@@ -45,38 +44,36 @@
                     @Html.DropDownListFor(m => ingredientVM.UnitId, Model.UnitSelectListItems, null, new { @class = "form-control" })
                     <span asp-validation-for="@ingredientVM.UnitId" class="text-danger"></span>
                     <br />
-                    <label class="control-label">Component*</label>
-                    @Html.DropDownListFor(m => ingredientVM.UnitId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
+                    <label class="control-label">Component</label>
+                    @Html.DropDownListFor(m => ingredientVM.ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
                     <span asp-validation-for="@ingredientVM.ComponentId" class="text-danger"></span>
                     <span asp-validation-for="IngredientViewModels" class="text-danger"></span>
-                    @{
-                        int index = Model.IngredientViewModels.IndexOf(ingredientVM);
-                        if (index > 0)
-                        {
-                            <br />
-                            <a asp-action="MoveUp">Move Up</a>
-                        }
-                        if (index < modelCount - 1)
-                        {
-                            <br />
-                            <a asp-action="MoveDown">Move Down</a>
-                        }
-                        if (index == modelCount - 1)
-                        {
-                            <br />
-                            <a id="addIngredient" href="#">Add Ingredient</a>
-                            addIngredientShown = true;
-                        }
+                    int index = Model.IngredientViewModels.IndexOf(ingredientVM);
+                    if (index > 0)
+                    {
+                        <br />
+                        <a asp-action="MoveUp">Move Up</a>
                     }
-                </div>
-            }
+                    if (index < modelCount - 1)
+                    {
+                        <br />
+                        <a asp-action="MoveDown">Move Down</a>
+                    }
+                    if (index == modelCount - 1)
+                    {
+                        <br />
+                        <a id="addIngredient" href="#">Add Ingredient</a>
+                        addIngredientShown = true;
+                    }
+                    <hr />
+                }
+            </div>
             @if (!addIngredientShown)
             {
-                <hr />
                 <a id="addIngredient" href="#">Add Ingredient</a>
+                <hr />
                 addIngredientShown = true;
             }
-            <hr />
             <div class="form-group">
                 <label asp-for="Instructions" class="control-label"></label>
                 <input asp-for="Instructions" class="form-control" />

@@ -23,22 +23,16 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
+            Type
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComponentTypeName)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            Type @*@Html.DisplayNameFor(model => model.ComponentType.Name)*@
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ComponentType.Name)
-        </dd>
-        <dt>
-            TypeId @*@Html.DisplayNameFor(model => model.ComponentType.Id)*@
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ComponentType.Id)
         </dd>
     </dl>
 </div>

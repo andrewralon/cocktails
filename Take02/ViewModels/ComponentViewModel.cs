@@ -13,7 +13,9 @@ namespace Take02.ViewModels
     {
         public Guid Id { get; set; }
 
-        public ComponentType ComponentType { get; set; }
+        public int ComponentTypeId { get; set; }
+
+        public string ComponentTypeName { get; set; }
 
         public string Name { get; set; }
 
@@ -30,7 +32,8 @@ namespace Take02.ViewModels
             : base()
         {
             Id = component.Id;
-            ComponentType = componentType;
+            ComponentTypeId = componentType.Id;
+            ComponentTypeName = componentType.Name;
             Name = component.Name;
             Description = component.Description;
         }

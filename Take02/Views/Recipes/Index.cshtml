@@ -8,7 +8,8 @@
 <h2>Recipes</h2>
 
 <p>
-    <a asp-action="Create">Create New</a> | @Html.ActionLink("Show/Hide Ingredients", "Index", "Recipes", new { ShowIngredients = !showIngredients }, null)
+    <a asp-action="Create">Create New</a> |
+    @Html.ActionLink("Show/Hide Ingredients", "Index", "Recipes", new { ShowIngredients = !showIngredients }, null)
 </p>
 <table class="table">
     <thead>

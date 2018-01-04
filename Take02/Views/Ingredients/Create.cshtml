@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Recipe</label>
-                @Html.DropDownList("RecipeId", Model.RecipeSelectListItems, null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RecipeId, Model.RecipeSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="RecipeId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,12 +29,12 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Unit</label>
-                @Html.DropDownList("UnitId", Model.UnitSelectListItems, null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.UnitId, Model.UnitSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="UnitId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Component</label>
-                @Html.DropDownList("ComponentId", Model.ComponentSelectListItems, null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="ComponentId" class="text-danger"></span>
             </div>
             <div class="form-group">
