@@ -3,6 +3,11 @@ USE cocktails;
 --DELETE FROM Library;
 INSERT INTO Library(Name) VALUES ('Death & Co');
 
+--DELETE FROM MixType;
+INSERT INTO MixType(Id, Name) VALUES
+	(1, 'Shaken'),
+	(2, 'Stirred');
+
 --DELETE FROM ComponentType;
 INSERT INTO ComponentType(Name) VALUES 
 	('Absinthe'),
@@ -48,4 +53,4 @@ INSERT INTO Component(ComponentTypeId, Name) VALUES
 	(18, 'Dry Champagne');
 
 --INSERT INTO Recipe(LibraryId, Name, Instructions) VALUES
---	('', 'Airmail', 'Shake all the ingredients (except the champagne) with ice, then strain into a flute. Top with champagne. No garnish');
+--	('', 'Airmail', 'Shake all the ingredients (except the champagne) with ice, then strain into a flute. Top with champagne. No garnish.');

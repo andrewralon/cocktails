@@ -14,6 +14,7 @@ namespace Take02.Models
         public DbSet<Component> Component { get; set; }
         public DbSet<ComponentType> ComponentType { get; set; }
         public DbSet<Ingredient> Ingredient { get; set; }
+        public DbSet<MixType> MixType { get; set; }
         public DbSet<Unit> Unit { get; set; }
 
         public CocktailsContext(DbContextOptions<CocktailsContext> options)
@@ -26,23 +27,6 @@ namespace Take02.Models
             modelBuilder.Entity<Library>()
                 .Property(b => b.Name)
                 .IsRequired();
-
-            //modelBuilder.Entity<Recipe>()
-            //    .HasOne(a => a.Library)
-            //    .WithMany(b => b.Recipes);
-
-            //modelBuilder.Entity<Component>()
-            //    .HasOne(a => a.ComponentType);
-
-            //modelBuilder.Entity<Ingredient>()
-            //    .HasOne(a => a.Recipe)
-            //    .WithMany(b => b.Ingredients);
-
-            //modelBuilder.Entity<Ingredient>()
-            //    .HasOne(a => a.Component);
-
-            //modelBuilder.Entity<Ingredient>()
-            //    .HasOne(a => a.Unit);
         }
     }
 }

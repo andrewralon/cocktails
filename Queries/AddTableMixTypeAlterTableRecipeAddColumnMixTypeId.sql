@@ -1,0 +1,22 @@
+USE cocktails;
+
+ALTER TABLE Recipe
+	DROP CONSTRAINT IF EXISTS FK_MixTypeRecipe;
+
+ALTER TABLE Recipe
+	DROP COLUMN IF EXISTS MixTypeId;
+
+DROP TABLE IF EXISTS MixType;
+
+CREATE TABLE MixType (
+	Id INT PRIMARY KEY,
+	Name NVARCHAR(255) NOT NULL
+);
+
+INSERT INTO MixType(Id, Name) VALUES
+	(1, 'Shaken'),
+	(2, 'Stirred');
+
+ALTER TABLE Recipe
+	ADD MixTypeId INT NOT NULL
+	CONSTRAINT FK_MixTypeRecipe FOREIGN KEY(MixTypeId) REFERENCES MixType(Id);

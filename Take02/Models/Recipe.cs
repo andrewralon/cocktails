@@ -17,6 +17,9 @@ namespace Take02.Models
         public string Name { get; set; }
 
         [Required]
+        public int MixTypeId { get; set; }
+
+        [Required]
         public string Instructions { get; set; }
 
         public string Source { get; set; }

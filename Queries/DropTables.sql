@@ -1,24 +1,30 @@
 USE cocktails;
 
 ALTER TABLE Recipe
-DROP CONSTRAINT FK_LibraryRecipe;
+DROP CONSTRAINT IF EXISTS FK_LibraryRecipe;
+ALTER TABLE Recipe
+DROP CONSTRAINT IF EXISTS FK_MixTypeRecipe;
 
 ALTER TABLE Component
-DROP CONSTRAINT FK_ComponentTypeComponent;
+DROP CONSTRAINT IF EXISTS FK_ComponentTypeComponent;
 
 ALTER TABLE Ingredient
-DROP CONSTRAINT FK_RecipeIngredient
-	,FK_ComponentIngredient
-	,FK_UnitIngredient;
+DROP CONSTRAINT IF EXISTS FK_RecipeIngredient;
+ALTER TABLE Ingredient
+DROP CONSTRAINT IF EXISTS FK_ComponentIngredient;
+ALTER TABLE Ingredient
+DROP CONSTRAINT IF EXISTS FK_UnitIngredient;
 
-DROP TABLE Recipe;
+DROP TABLE IF EXISTS Recipe;
 
-DROP TABLE Ingredient;
+DROP TABLE IF EXISTS MixType;
 
-DROP TABLE Component;
+DROP TABLE IF EXISTS Ingredient;
 
-DROP TABLE ComponentType;
+DROP TABLE IF EXISTS Component;
 
-DROP TABLE Unit;
+DROP TABLE IF EXISTS ComponentType;
 
-DROP TABLE Library;
+DROP TABLE IF EXISTS Unit;
+
+DROP TABLE IF EXISTS Library;

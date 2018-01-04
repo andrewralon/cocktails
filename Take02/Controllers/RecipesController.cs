@@ -29,7 +29,7 @@ namespace Take02.Controllers
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
+            if (id == null || !RecipeExists(id.Value))
             {
                 return NotFound();
             }
@@ -43,10 +43,9 @@ namespace Take02.Controllers
         {
             var model = new RecipeViewModel();
             model.LibrarySelectListItems = Helper.GetLibrarySelectListItems(_context);
+            model.MixTypeSelectListItems = Helper.GetMixTypeSelectListItems(_context);
             model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
             model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
-            model.IngredientViewModels = new List<IngredientViewModel>();
-            model.IngredientViewModels.Add(new IngredientViewModel());
             return View(model);
         }
 
@@ -55,7 +54,7 @@ namespace Take02.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LibraryId,Name,Instructions,Source")] Recipe recipe)
+        public async Task<IActionResult> Create([Bind("Id,LibraryId,Name,MixTypeId,Instructions,Source")] Recipe recipe)
         {
             if (ModelState.IsValid)
             {
@@ -70,13 +69,14 @@ namespace Take02.Controllers
         // GET: Recipes/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null)
+            if (id == null || !RecipeExists(id.Value))
             {
                 return NotFound();
             }
 
             var model = await Helper.GetRecipeViewModelAsync(_context, id.Value, true);
             model.LibrarySelectListItems = Helper.GetLibrarySelectListItems(_context);
+            model.MixTypeSelectListItems = Helper.GetMixTypeSelectListItems(_context);
             model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
             model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
             return View(model);
@@ -87,7 +87,7 @@ namespace Take02.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,LibraryId,Name,Instructions,Source")] Recipe recipe)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,LibraryId,Name,MixTypeId,Instructions,Source")] Recipe recipe)
         {
             if (id != recipe.Id)
             {
@@ -120,7 +120,7 @@ namespace Take02.Controllers
         // GET: Recipes/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null)
+            if (id == null || !RecipeExists(id.Value))
             {
                 return NotFound();
             }

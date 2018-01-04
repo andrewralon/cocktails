@@ -126,6 +126,30 @@ namespace Take02.Controllers
             return GetLibrariessAsync(_context).Result;
         }
 
+        public static async Task<MixType> GetMixTypeAsync(CocktailsContext _context, int mixTypeId)
+        {
+            var mixType = await _context.MixType
+                .SingleOrDefaultAsync(mbox => mbox.Id == mixTypeId);
+            return mixType;
+        }
+
+        public static MixType GetMixType(CocktailsContext _context, int mixTypeId)
+        {
+            return GetMixTypeAsync(_context, mixTypeId).Result;
+        }
+
+        public static async Task<List<MixType>> GetMixTypesAsync(CocktailsContext _context)
+        {
+            var mixTypes = await _context.MixType
+                .ToListAsync();
+            return mixTypes;
+        }
+
+        public static List<MixType> GetMixTypes(CocktailsContext _context)
+        {
+            return GetMixTypesAsync(_context).Result;
+        }
+
         public static async Task<Recipe> GetRecipeAsync(CocktailsContext _context, Guid recipeId)
         {
             var recipe = await _context.Recipe
@@ -248,7 +272,9 @@ namespace Take02.Controllers
 
             var library = await GetLibraryAsync(_context, recipe.LibraryId);
 
-            var model = new RecipeViewModel(recipe, library);
+            var mixType = await GetMixTypeAsync(_context, recipe.MixTypeId);
+
+            var model = new RecipeViewModel(recipe, library, mixType);
 
             if (includeIngredients)
             {
@@ -331,6 +357,19 @@ namespace Take02.Controllers
             var libraries = GetLibraries(_context);
 
             var items = libraries.ConvertAll(t => new SelectListItem()
+            {
+                Text = t.Name,
+                Value = t.Id.ToString()
+            });
+
+            return items;
+        }
+
+        public static List<SelectListItem> GetMixTypeSelectListItems(CocktailsContext _context)
+        {
+            var mixTypes = GetMixTypes(_context);
+
+            var items = mixTypes.ConvertAll(t => new SelectListItem()
             {
                 Text = t.Name,
                 Value = t.Id.ToString()
