@@ -55,12 +55,26 @@ namespace Take02.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LibraryId,Name,MixTypeId,Instructions,Source")] Recipe recipe)
+        public async Task<IActionResult> Create(
+            [Bind("Id,LibraryId,Name,MixTypeId,Instructions,Source")] Recipe recipe,
+            RecipeViewModel recipeVM)
         {
             if (ModelState.IsValid)
             {
                 recipe.Id = Guid.NewGuid();
                 _context.Add(recipe);
+                await _context.SaveChangesAsync();
+                foreach (var ingredientVM in recipeVM.IngredientViewModels)
+                {
+                    var ingredient = new Ingredient();
+                    ingredient.Id = Guid.NewGuid();
+                    ingredient.RecipeId = recipe.Id;
+                    ingredient.ComponentId = ingredientVM.ComponentId;
+                    ingredient.Quantity = ingredientVM.Quantity;
+                    ingredient.UnitId = ingredientVM.UnitId;
+                    ingredient.Number = ingredientVM.Number;
+                    _context.Add(ingredient);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -88,7 +102,10 @@ namespace Take02.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,LibraryId,Name,MixTypeId,Instructions,Source")] Recipe recipe)
+        public async Task<IActionResult> Edit(
+            Guid id,
+            [Bind("Id,LibraryId,Name,MixTypeId,Instructions,Source")] Recipe recipe,
+            RecipeViewModel recipeVM)
         {
             if (id != recipe.Id)
             {
@@ -100,6 +117,15 @@ namespace Take02.Controllers
                 try
                 {
                     _context.Update(recipe);
+                    foreach (var ingredientVM in recipeVM.IngredientViewModels)
+                    {
+                        var ingredient = Helper.GetIngredient(_context, ingredientVM.Id);
+                        ingredient.ComponentId = ingredientVM.ComponentId;
+                        ingredient.Quantity = ingredientVM.Quantity;
+                        ingredient.UnitId = ingredientVM.UnitId;
+                        ingredient.Number = ingredientVM.Number;
+                        _context.Update(ingredient);
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
