@@ -38,6 +38,7 @@ namespace Take02.ViewModels
 
         public IngredientViewModel()
         {
+            Id = Guid.NewGuid();
             ComponentSelectListItems = new List<SelectListItem>();
             RecipeSelectListItems = new List<SelectListItem>();
             UnitSelectListItems = new List<SelectListItem>();

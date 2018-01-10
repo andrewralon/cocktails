@@ -66,13 +66,15 @@ namespace Take02.Controllers
                 await _context.SaveChangesAsync();
                 foreach (var ingredientVM in recipeVM.IngredientViewModels)
                 {
-                    var ingredient = new Ingredient();
-                    ingredient.Id = Guid.NewGuid();
-                    ingredient.RecipeId = recipe.Id;
-                    ingredient.ComponentId = ingredientVM.ComponentId;
-                    ingredient.Quantity = ingredientVM.Quantity;
-                    ingredient.UnitId = ingredientVM.UnitId;
-                    ingredient.Number = ingredientVM.Number;
+                    var ingredient = new Ingredient
+                    {
+                        Id = Guid.NewGuid(),
+                        RecipeId = recipe.Id,
+                        ComponentId = ingredientVM.ComponentId,
+                        Quantity = ingredientVM.Quantity,
+                        UnitId = ingredientVM.UnitId,
+                        Number = ingredientVM.Number
+                    };
                     _context.Add(ingredient);
                 }
                 await _context.SaveChangesAsync();
@@ -119,12 +121,32 @@ namespace Take02.Controllers
                     _context.Update(recipe);
                     foreach (var ingredientVM in recipeVM.IngredientViewModels)
                     {
+                        bool isNew = false;
                         var ingredient = Helper.GetIngredient(_context, ingredientVM.Id);
+
+                        if (ingredient == null)
+                        {
+                            isNew = true;
+                            ingredient = new Ingredient
+                            {
+                                Id = ingredientVM.Id
+                            };
+                        }
+
+                        ingredient.RecipeId = recipe.Id;
                         ingredient.ComponentId = ingredientVM.ComponentId;
                         ingredient.Quantity = ingredientVM.Quantity;
                         ingredient.UnitId = ingredientVM.UnitId;
                         ingredient.Number = ingredientVM.Number;
-                        _context.Update(ingredient);
+
+                        if (isNew)
+                        {
+                            _context.Add(ingredient);
+                        }
+                        else
+                        {
+                            _context.Update(ingredient);
+                        }
                     }
                     await _context.SaveChangesAsync();
                 }
@@ -142,6 +164,21 @@ namespace Take02.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(recipe);
+        }
+
+        // GET: Recipes/AddNewIngredient/5
+        public ActionResult AddNewIngredient(Guid? id)
+        {
+            var model = new IngredientViewModel();
+
+            if (id != null && RecipeExists(id.Value))
+            {
+                model.RecipeId = id.Value;
+                model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
+                model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
+            }
+
+            return PartialView("_AddEditIngredientPartial", model);
         }
 
         // GET: Recipes/Delete/5

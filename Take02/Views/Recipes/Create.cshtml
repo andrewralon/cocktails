@@ -27,7 +27,22 @@
                 @Html.DropDownListFor(m => m.MixTypeId, Model.MixTypeSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="MixTypeId" class="text-danger"></span>
             </div>
-            @Html.Partial("_AddEditIngredientPartial")
+            <div id="newIngredient" class="form-group">
+                <hr />
+                <label class="control-label">Ingredients</label>
+                <br />
+                <br />
+                @foreach (var ingredientVM in Model.IngredientViewModels)
+                {
+                    ingredientVM.ComponentSelectListItems = Model.ComponentSelectListItems;
+                    ingredientVM.UnitSelectListItems = Model.UnitSelectListItems;
+                    Html.RenderPartial("_AddEditIngredientPartial", ingredientVM);
+                }
+            </div>
+            <div class="form-group">
+                <input type="button" id="addIngredient" name="addIngredient" value="Add Ingredient" />
+                <hr />
+            </div>
             <div class="form-group">
                 <label asp-for="Instructions" class="control-label"></label>
                 <input asp-for="Instructions" class="form-control" />
@@ -50,5 +65,20 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+        $('#addIngredient').on('click', function () {
+            $.ajax({
+                async: false,
+                url: '/Ingredient/AddNewEmployee'
+            }).success(function (partialView) {
+                $('#newIngredient').append(partialView);
+            });
+        });
+
+        $("#deleteRow").live("click", function () {
+            $(this).parents("#employeeRow:first").remove();
+            return false;
+        });
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

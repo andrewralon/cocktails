@@ -1,51 +1,32 @@
-﻿@model Take02.ViewModels.RecipeViewModel
+﻿@using HtmlHelpers.BeginCollectionItemCore
+@model Take02.ViewModels.IngredientViewModel
 
-@{
-    var modelCount = Model.IngredientViewModels.Count;
-    var addIngredientShown = false;
-}
-
-<div class="form-group">
-    <label class="control-label">Ingredients</label>
-    <hr />
-    @for (int i = 0; i < Model.IngredientViewModels.Count; i++)
-    {
-        <input type="hidden" asp-for="IngredientViewModels[i].Id" />
-        <input type="hidden" asp-for="IngredientViewModels[i].Number" />
-        <label class="control-label">Quantity</label>
-        <input asp-for="IngredientViewModels[i].Quantity" class="form-control" />
-        <span asp-validation-for="IngredientViewModels[i].Quantity" class="text-danger"></span>
-        <br />
-        <label class="control-label">Unit</label>
-        @Html.DropDownListFor(m => m.IngredientViewModels[i].UnitId, Model.UnitSelectListItems, null, new { @class = "form-control" })
-        <span asp-validation-for="IngredientViewModels[i].UnitId" class="text-danger"></span>
-        <br />
-        <label class="control-label">Component</label>
-        @Html.DropDownListFor(m => m.IngredientViewModels[i].ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
-        <span asp-validation-for="IngredientViewModels[i].ComponentId" class="text-danger"></span>
-        <span asp-validation-for="IngredientViewModels" class="text-danger"></span>
-        if (i > 0)
-        {
-            <br />
-            <a asp-action="MoveUp">Move Up</a>
-        }
-        if (i < modelCount - 1)
-        {
-            <br />
-            <a asp-action="MoveDown">Move Down</a>
-        }
-        if (i == modelCount - 1)
-        {
-            <br />
-            <a id="addIngredient" href="#">Add Ingredient</a>
-            addIngredientShown = true;
-        }
-        <hr />
-    }
-</div>
-@if (!addIngredientShown)
+@using (Html.BeginCollectionItem("IngredientViewModels"))
 {
-    <a id="addIngredient" href="#">Add Ingredient</a>
-    <hr />
-    addIngredientShown = true;
+<div id="ingredientRow" class="ingredientRow">
+    <br />
+    <input type="hidden" asp-for="@Model.Id" />
+
+    <input type="hidden" asp-for="@Model.Number" />
+
+    <label class="control-label">Quantity</label>
+    <input asp-for="@Model.Quantity" class="form-control" />
+    <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+
+    <br />
+
+    <label class="control-label">Unit</label>
+    @Html.DropDownListFor(m => Model.UnitId, Model.UnitSelectListItems, null, new { @class = "form-control" })
+    <span asp-validation-for="@Model.UnitId" class="text-danger"></span>
+
+    <br />
+
+    <label class="control-label">Component</label>
+    @Html.DropDownListFor(m => m.ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
+    <span asp-validation-for="@Model.ComponentId" class="text-danger"></span>
+
+    <span asp-validation-for="@Model" class="text-danger"></span>
+    <br />
+    <br />
+</div>
 }

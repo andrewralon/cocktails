@@ -28,7 +28,22 @@
                 @Html.DropDownListFor(m => m.MixTypeId, Model.MixTypeSelectListItems, null, new { @class = "form-control" })
                 <span asp-validation-for="MixTypeId" class="text-danger"></span>
             </div>
-            @Html.Partial("_AddEditIngredientPartial")
+            <div id="newIngredient" class="form-group">
+                <hr />
+                <label class="control-label">Ingredients</label>
+                <br />
+                <br />
+                @foreach (var ingredientVM in Model.IngredientViewModels)
+                {
+                    ingredientVM.ComponentSelectListItems = Model.ComponentSelectListItems;
+                    ingredientVM.UnitSelectListItems = Model.UnitSelectListItems;
+                    Html.RenderPartial("_AddEditIngredientPartial", ingredientVM);
+                }
+            </div>
+            <div class="form-group">
+                <input type="button" id="addIngredient" name="addIngredient" value="Add Ingredient" />
+                <hr />
+            </div>
             <div class="form-group">
                 <label asp-for="Instructions" class="control-label"></label>
                 <input asp-for="Instructions" class="form-control" />
@@ -51,5 +66,30 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+        var url = '/Recipes/AddNewIngredient/@Model.Id';
+        $('#addIngredient').on('click', function () {
+            $.ajax({
+                async: false,
+                url: url
+            }).success(function (partialView) {
+                $('#newIngredient').append(partialView);
+            });
+        });
+
+        //$('.deleteIngredient').click(function () {
+        //    var id = $(this).data('id');
+        //    var row = $(this).parent('.ingredientRow');
+        //    row.remove();
+        //    $(this).parent('.ingredientRow').remove();
+        //    $(this).parent('div').remove();
+        //});
+
+        //$(".ingredientRow").on("click", ".deleteIngredient", function (e) { //user click on remove text
+        //    e.preventDefault();
+        //    $(this).parent('div').remove();
+        //    //$(this).parent('.ingredientRow').remove();
+        //});
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

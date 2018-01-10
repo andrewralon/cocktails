@@ -41,10 +41,12 @@ namespace Take02.Controllers
         // GET: Ingredients/Create
         public IActionResult Create()
         {
-            var model = new IngredientViewModel();
-            model.RecipeSelectListItems = Helper.GetRecipeSelectListItems(_context);
-            model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
-            model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
+            var model = new IngredientViewModel
+            {
+                RecipeSelectListItems = Helper.GetRecipeSelectListItems(_context),
+                ComponentSelectListItems = Helper.GetComponentSelectListItems(_context),
+                UnitSelectListItems = Helper.GetUnitSelectListItems(_context)
+            };
             return View(model);
         }
 
