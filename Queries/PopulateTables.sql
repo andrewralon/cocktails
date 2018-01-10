@@ -40,6 +40,7 @@ INSERT INTO Unit(Name) VALUES
 	('ml'),
 	('tsp'),
 	('tbsp'),
+	('cup'),
 	('dash'),
 	('drop'),
 	('bar spoon'),
