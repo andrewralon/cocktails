@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var isFirstIngredient = true;
 }
 
 <h2>Create</h2>
@@ -34,13 +35,15 @@
                 <br />
                 @foreach (var ingredientVM in Model.IngredientViewModels)
                 {
+                    ingredientVM.IsFirstIngredient = isFirstIngredient;
                     ingredientVM.ComponentSelectListItems = Model.ComponentSelectListItems;
                     ingredientVM.UnitSelectListItems = Model.UnitSelectListItems;
                     Html.RenderPartial("_AddEditIngredientPartial", ingredientVM);
+                    isFirstIngredient = false;
                 }
             </div>
             <div class="form-group">
-                <input type="button" id="addIngredient" name="addIngredient" value="Add Ingredient" />
+                <input type="button" id="addIngredient" name="addIngredient" value="Add Ingredient" onclick="AddNewIngredient()" />
                 <hr />
             </div>
             <div class="form-group">
@@ -65,20 +68,5 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript">
-        $('#addIngredient').on('click', function () {
-            $.ajax({
-                async: false,
-                url: '/Ingredient/AddNewEmployee'
-            }).success(function (partialView) {
-                $('#newIngredient').append(partialView);
-            });
-        });
-
-        $("#deleteRow").live("click", function () {
-            $(this).parents("#employeeRow:first").remove();
-            return false;
-        });
-    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

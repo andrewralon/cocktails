@@ -28,6 +28,8 @@ namespace Take02.ViewModels
 
         public int Number { get; set; }
 
+        public bool IsFirstIngredient { get; set; }
+
         public List<SelectListItem> ComponentSelectListItems { get; set; }
 
         public List<SelectListItem> RecipeSelectListItems { get; set; }
@@ -42,6 +44,7 @@ namespace Take02.ViewModels
             ComponentSelectListItems = new List<SelectListItem>();
             RecipeSelectListItems = new List<SelectListItem>();
             UnitSelectListItems = new List<SelectListItem>();
+            IsFirstIngredient = false;
         }
 
         public IngredientViewModel(

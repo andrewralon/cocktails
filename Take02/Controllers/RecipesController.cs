@@ -41,12 +41,19 @@ namespace Take02.Controllers
         // GET: Recipes/Create
         public IActionResult Create()
         {
-            var model = new RecipeViewModel();
-            model.IngredientViewModels.Add(new IngredientViewModel());
-            model.LibrarySelectListItems = Helper.GetLibrarySelectListItems(_context);
-            model.MixTypeSelectListItems = Helper.GetMixTypeSelectListItems(_context);
-            model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
-            model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
+            var model = new RecipeViewModel
+            {
+                LibrarySelectListItems = Helper.GetLibrarySelectListItems(_context),
+                MixTypeSelectListItems = Helper.GetMixTypeSelectListItems(_context),
+                ComponentSelectListItems = Helper.GetComponentSelectListItems(_context),
+                UnitSelectListItems = Helper.GetUnitSelectListItems(_context)
+            };
+            model.IngredientViewModels.Add(new IngredientViewModel()
+            {
+                IsFirstIngredient = true,
+                ComponentSelectListItems = model.ComponentSelectListItems,
+                UnitSelectListItems = model.UnitSelectListItems
+            });
             return View(model);
         }
 
@@ -169,13 +176,14 @@ namespace Take02.Controllers
         // GET: Recipes/AddNewIngredient/5
         public ActionResult AddNewIngredient(Guid? id)
         {
-            var model = new IngredientViewModel();
-
+            var model = new IngredientViewModel()
+            {
+                ComponentSelectListItems = Helper.GetComponentSelectListItems(_context),
+                UnitSelectListItems = Helper.GetUnitSelectListItems(_context)
+            };
             if (id != null && RecipeExists(id.Value))
             {
                 model.RecipeId = id.Value;
-                model.ComponentSelectListItems = Helper.GetComponentSelectListItems(_context);
-                model.UnitSelectListItems = Helper.GetUnitSelectListItems(_context);
             }
 
             return PartialView("_AddEditIngredientPartial", model);
