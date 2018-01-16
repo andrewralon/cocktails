@@ -8,7 +8,6 @@
         // Set the sort order based on existing items on the page
         var maxNumber = 0;
         $('.ingredientsContainer').find('input.number').each(function() {
-            console.log($(this).val());
             var number = parseInt($(this).val());
             if(number > maxNumber) {
                 maxNumber = number;
