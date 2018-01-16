@@ -3,35 +3,35 @@
 
 @using (Html.BeginCollectionItem("IngredientViewModels"))
 {
-    <div id="ingredientRow" class="ingredientRow">
-        <br />
-        <input type="hidden" asp-for="@Model.Id" />
+<div id="ingredientRow" class="ingredientRow">
+    <br />
+    <input type="hidden" asp-for="@Model.Id" />
 
-        <input type="hidden" asp-for="@Model.Number" />
+    <input type="hidden" asp-for="@Model.Number" />
 
-        <label class="control-label">Quantity</label>
-        <input asp-for="@Model.Quantity" class="form-control" />
-        <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
+    <a href="javascript:void(0);" class="moveUp">↑</a>
+    <a href="javascript:void(0);" class="moveDown">↓</a>
+    <label class="control-label">Quantity</label>
+    <input asp-for="@Model.Quantity" class="form-control" />
+    <span asp-validation-for="@Model.Quantity" class="text-danger"></span>
 
-        <br />
+    <br />
 
-        <label class="control-label">Unit</label>
-        @Html.DropDownListFor(m => Model.UnitId, Model.UnitSelectListItems, null, new { @class = "form-control" })
-        <span asp-validation-for="@Model.UnitId" class="text-danger"></span>
+    <label class="control-label">Unit</label>
+    @Html.DropDownListFor(m => Model.UnitId, Model.UnitSelectListItems, null, new { @class = "form-control" })
+    <span asp-validation-for="@Model.UnitId" class="text-danger"></span>
 
-        <br />
+    <br />
 
-        <label class="control-label">Component</label>
-        @Html.DropDownListFor(m => m.ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
-        <span asp-validation-for="@Model.ComponentId" class="text-danger"></span>
+    <label class="control-label">Component</label>
+    @Html.DropDownListFor(m => m.ComponentId, Model.ComponentSelectListItems, null, new { @class = "form-control" })
+    <span asp-validation-for="@Model.ComponentId" class="text-danger"></span>
 
-        <span asp-validation-for="@Model" class="text-danger"></span>
+    <span asp-validation-for="@Model" class="text-danger"></span>
 
-        @if (!Model.IsFirstIngredient)
-        {
-            <a href="javascript:void(0);" onclick="$(this).parent().remove();">Delete Ingredient</a>
-        }
-        <br />
-        <br />
-    </div>
+    <a href="javascript:void(0);" class="remove">Delete Ingredient</a>
+
+    <br />
+    <br />
+</div>
 }
