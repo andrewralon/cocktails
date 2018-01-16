@@ -106,6 +106,9 @@ function wirePreviousLink(anchorTag) {
         $(ingredient).remove();
         $(ingredient).insertBefore(previous);
 
+        // Switch the field which indicates order to the server side
+        swapOrder(ingredient, previous);
+
         // We might have changed the top/bottom ingredient, so we need
         // to re-evaluate ordering links
         wireOrderingLinks();
@@ -120,8 +123,17 @@ function wireNextLink(anchorTag) {
         $(ingredient).remove();
         $(ingredient).insertAfter(next);
 
+        swapOrder(ingredient, next);
+
         wireOrderingLinks();
     });
+}
+
+function swapOrder(first, second) {
+    var firstOrder = $(first).find("input.number").val();
+    var secondOrder = $(second).find("input.number").val();
+    $(first).find("input.number").val(secondOrder);
+    $(second).find("input.number").val(firstOrder);
 }
 
 // This is called when the page loads. We need to handle that base
@@ -130,4 +142,3 @@ $(document).ready(function() {
     wireOrderingLinks();
     wireRemoveLinks();
 });
-
