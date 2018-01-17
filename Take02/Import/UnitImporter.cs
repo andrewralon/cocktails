@@ -11,9 +11,10 @@ namespace Take02.Import
     {
         /// <summary>
         /// An idempotent operation which takes in a set of Unit names
-        /// and verifies that they all exist in the database
+        /// and verifies that they all exist in the database. Returns
+        /// a mapping of Unit name to DB ID.
         /// </summary>
-        Task ImportUnits(IEnumerable<string> unitNames);
+        Task<IDictionary<string, int>> ImportUnits(IEnumerable<string> unitNames);
     }
 
     public class UnitImporter : IUnitImporter
@@ -25,7 +26,7 @@ namespace Take02.Import
             _context = context;
         }
 
-        public async Task ImportUnits(IEnumerable<string> unitNames)
+        public async Task<IDictionary<string, int>> ImportUnits(IEnumerable<string> unitNames)
         {
             var existingUnits = await _context.Unit.ToListAsync();
 
@@ -39,6 +40,11 @@ namespace Take02.Import
 
             await _context.Unit.AddRangeAsync(newUnits);
             await _context.SaveChangesAsync();
+
+            return (await _context
+            .Unit
+            .ToListAsync())
+            .ToDictionary(a => a.Name, a => a.Id);
         }
     }
 }

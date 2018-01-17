@@ -80,8 +80,9 @@ namespace Take02.Tests.Import
                 IngredientName = a,
                 IngredientType = componentTypeName
             });
-            await _sut.ImportComponents(ingredients);
+            var result = await _sut.ImportComponents(ingredients);
             Assert.Equal(6, _db.Component.Count());
+            Assert.Equal(6, result.Count());
         }
     }
 }

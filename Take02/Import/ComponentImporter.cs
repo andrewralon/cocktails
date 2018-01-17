@@ -17,10 +17,11 @@ namespace Take02.Import
 
         /// <summary>
         /// And idempotent operation which takes in a set of ImportIngredients
-        /// and verifies that they all exist in the database. Assumes that
-        /// their ComponentTypes are already imported.
+        /// and verifies that they all exist in the database, assuming that
+        /// their ComponentTypes are already imported. Returns a mapping of
+        /// component names to DB IDs.
         /// </summary>
-        Task ImportComponents(IEnumerable<ImportIngredient> ingredients);
+        Task<IDictionary<string, Guid>> ImportComponents(IEnumerable<ImportIngredient> ingredients);
     }
 
     public class ComponentImporter : IComponentImporter
@@ -48,7 +49,7 @@ namespace Take02.Import
             await _context.SaveChangesAsync();
         }
 
-        public async Task ImportComponents(IEnumerable<ImportIngredient> ingredients)
+        public async Task<IDictionary<string, Guid>> ImportComponents(IEnumerable<ImportIngredient> ingredients)
         {
             var componentTypes = await _context.ComponentType.ToListAsync();
             var componentTypeMap = componentTypes.ToDictionary(a => a.Name, a => a.Id);
@@ -71,6 +72,11 @@ namespace Take02.Import
 
             await _context.Component.AddRangeAsync(newComponents);
             await _context.SaveChangesAsync();
+
+            return (await _context
+            .Component
+            .ToListAsync())
+            .ToDictionary(a => a.Name, a => a.Id);
         }
     }
 }

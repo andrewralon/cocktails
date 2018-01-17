@@ -45,8 +45,9 @@ namespace Take02.Tests.Import
             }));
             await _db.SaveChangesAsync();
 
-            await _sut.ImportUnits(existingUnits.Concat(newUnits));
+            var result = await _sut.ImportUnits(existingUnits.Concat(newUnits));
             Assert.Equal(6, _db.Unit.Count());
+            Assert.Equal(6, result.Count);
         }
     }
 }
