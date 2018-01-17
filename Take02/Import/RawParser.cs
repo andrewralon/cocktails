@@ -43,9 +43,10 @@ namespace Take02.Import
                     Amount = field(2),
                     Unit = field(3),
                     Ingredient = field(4),
-                    Index = int.Parse(field(5)),
-                    Garnish = int.Parse(field(6)),
-                    Instructions = field(7)
+                    MixMethod = int.Parse(field(5)),
+                    Index = int.Parse(field(6)),
+                    Garnish = int.Parse(field(7)),
+                    Instructions = field(8)
                 };
             }
         }
@@ -79,7 +80,8 @@ namespace Take02.Import
                     {
                         RecipeName = recipeGrouping.Key,
                         Instructions = instructions,
-                        Ingredients = ingredients
+                        Ingredients = ingredients,
+                        MixMethod = recipeGrouping.First().MixMethod
                     });
                 }
 

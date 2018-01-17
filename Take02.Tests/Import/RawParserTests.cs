@@ -21,6 +21,7 @@ namespace Take02.Tests.Import
             "amount",
             "unit",
             "ingredient",
+            "1",
             "0",
             "0",
             "instructions"
@@ -33,6 +34,7 @@ namespace Take02.Tests.Import
             "amount",
             "unit",
             "ingredient",
+            "1",
             "0",
             "0"
         };
@@ -51,9 +53,10 @@ namespace Take02.Tests.Import
             Assert.Equal(FullRowFields[2], parsed.Amount);
             Assert.Equal(FullRowFields[3], parsed.Unit);
             Assert.Equal(FullRowFields[4], parsed.Ingredient);
-            Assert.Equal(int.Parse(FullRowFields[5]), parsed.Index);
-            Assert.Equal(int.Parse(FullRowFields[6]), parsed.Garnish);
-            Assert.Equal(FullRowFields[7], parsed.Instructions);
+            Assert.Equal(int.Parse(FullRowFields[5]), parsed.MixMethod);
+            Assert.Equal(int.Parse(FullRowFields[6]), parsed.Index);
+            Assert.Equal(int.Parse(FullRowFields[7]), parsed.Garnish);
+            Assert.Equal(FullRowFields[8], parsed.Instructions);
         }
 
         [Fact]
@@ -70,8 +73,9 @@ namespace Take02.Tests.Import
             Assert.Equal(PartialRowFields[2], parsed.Amount);
             Assert.Equal(PartialRowFields[3], parsed.Unit);
             Assert.Equal(PartialRowFields[4], parsed.Ingredient);
-            Assert.Equal(int.Parse(PartialRowFields[5]), parsed.Index);
-            Assert.Equal(int.Parse(PartialRowFields[6]), parsed.Garnish);
+            Assert.Equal(int.Parse(PartialRowFields[5]), parsed.MixMethod);
+            Assert.Equal(int.Parse(PartialRowFields[6]), parsed.Index);
+            Assert.Equal(int.Parse(PartialRowFields[7]), parsed.Garnish);
             Assert.Null(parsed.Instructions);
         }
 
@@ -134,6 +138,7 @@ namespace Take02.Tests.Import
                             Amount = "A lot",
                             Unit = "of stuff",
                             Ingredient = ingredientType,
+                            MixMethod = 1,
                             Index = index,
                             Garnish = 0,
                             Instructions = index++ == 0 ? "Instructions" : null
