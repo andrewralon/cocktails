@@ -57,7 +57,7 @@ namespace Take02.Tests.Import
             });
             await _db.SaveChangesAsync();
 
-            var newLibraryName = "Landie Enterprises";
+            var newLibraryName = "Landie.net: It's dot com";
 
             var result = await _sut.ImportLibraries(new [] { existingLibraryName, newLibraryName });
 

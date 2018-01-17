@@ -21,6 +21,7 @@ namespace Take02.Tests.Import
             "amount",
             "unit",
             "ingredient",
+            "ingredientType",
             "1",
             "0",
             "0",
@@ -34,6 +35,7 @@ namespace Take02.Tests.Import
             "amount",
             "unit",
             "ingredient",
+            "ingredientType",
             "1",
             "0",
             "0"
@@ -53,10 +55,11 @@ namespace Take02.Tests.Import
             Assert.Equal(FullRowFields[2], parsed.Amount);
             Assert.Equal(FullRowFields[3], parsed.Unit);
             Assert.Equal(FullRowFields[4], parsed.Ingredient);
-            Assert.Equal(int.Parse(FullRowFields[5]), parsed.MixMethod);
-            Assert.Equal(int.Parse(FullRowFields[6]), parsed.Index);
-            Assert.Equal(int.Parse(FullRowFields[7]), parsed.Garnish);
-            Assert.Equal(FullRowFields[8], parsed.Instructions);
+            Assert.Equal(FullRowFields[5], parsed.IngredientType);
+            Assert.Equal(int.Parse(FullRowFields[6]), parsed.MixMethod);
+            Assert.Equal(int.Parse(FullRowFields[7]), parsed.Index);
+            Assert.Equal(int.Parse(FullRowFields[8]), parsed.Garnish);
+            Assert.Equal(FullRowFields[9], parsed.Instructions);
         }
 
         [Fact]
@@ -73,9 +76,10 @@ namespace Take02.Tests.Import
             Assert.Equal(PartialRowFields[2], parsed.Amount);
             Assert.Equal(PartialRowFields[3], parsed.Unit);
             Assert.Equal(PartialRowFields[4], parsed.Ingredient);
-            Assert.Equal(int.Parse(PartialRowFields[5]), parsed.MixMethod);
-            Assert.Equal(int.Parse(PartialRowFields[6]), parsed.Index);
-            Assert.Equal(int.Parse(PartialRowFields[7]), parsed.Garnish);
+            Assert.Equal(PartialRowFields[5], parsed.IngredientType);
+            Assert.Equal(int.Parse(PartialRowFields[6]), parsed.MixMethod);
+            Assert.Equal(int.Parse(PartialRowFields[7]), parsed.Index);
+            Assert.Equal(int.Parse(PartialRowFields[8]), parsed.Garnish);
             Assert.Null(parsed.Instructions);
         }
 
@@ -138,6 +142,7 @@ namespace Take02.Tests.Import
                             Amount = "A lot",
                             Unit = "of stuff",
                             Ingredient = ingredientType,
+                            IngredientType = ingredientType,
                             MixMethod = 1,
                             Index = index,
                             Garnish = 0,

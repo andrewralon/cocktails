@@ -10,6 +10,7 @@ namespace Take02.Import
         public string Amount { get; set; }
         public string Unit { get; set; }
         public string Ingredient { get; set; }
+        public string IngredientType { get; set; }
         public int MixMethod { get; set; }
         public int Index { get; set; }
         public int Garnish { get; set; }
@@ -40,6 +41,7 @@ namespace Take02.Import
         public string Amount { get; set; }
         public string Unit { get; set; }
         public string IngredientName { get; set; }
+        public string IngredientType { get; set; }
         public int Index { get; set; }
         public int Garnish { get; set; }
     }
