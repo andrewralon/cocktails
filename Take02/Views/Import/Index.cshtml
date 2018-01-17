@@ -1,0 +1,17 @@
+@model Take02.ViewModels.ImportViewModel
+@{
+    ViewData["Title"] = "Bulk Import";
+}
+
+<h2>Bulk Import</h2>
+<form asp-action="Index">
+    <label asp-for="ImportData" class="control-label">Paste tab-delimited data here</label>
+    <textarea asp-for="ImportData" class="form-control" placeholder="Tab-delimited data"></textarea>
+    <br />
+    <span style="color: red; font-weight: 800;">This hasn't been thoroughly vetted yet, be prepared to add a bunch of stuff you might not want.</span>
+    <br />
+    <input asp-for="AreYouSerious" type="checkbox" />
+    <label asp-for="AreYouSerious">Are you serious about committing this?</label>
+    <br />
+    <input type="submit" value="Submit" class="btn btn-default" />
+</form>

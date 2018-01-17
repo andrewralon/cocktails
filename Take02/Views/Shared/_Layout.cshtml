@@ -23,6 +23,15 @@
             <img id="banner" src="~/images/banner.jpg" alt="cocktails" />
         </a>
     </div>
+    @{
+        var message = TempData["message"] as string;
+        if(!string.IsNullOrWhiteSpace(message))
+        {
+            <div id="banner-message">
+                @message
+            </div>
+        }
+    }
     <div class="container body-content">
         @RenderBody()
         <hr />

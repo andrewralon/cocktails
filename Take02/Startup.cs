@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Take02.Models;
 using Microsoft.EntityFrameworkCore;
+using Take02.Models;
+using Take02.Import;
 
 namespace Take02
 {
@@ -29,6 +30,14 @@ namespace Take02
 
             var cocktailsConnectionString = Configuration.GetConnectionString("CocktailsDatabase");
             services.AddDbContext<CocktailsContext>(options => options.UseSqlServer(cocktailsConnectionString));
+
+            // Importer and dependencies
+            services.AddTransient<IImporter, Importer>();
+            services.AddTransient<IComponentImporter, ComponentImporter>();
+            services.AddTransient<ILibraryImporter, LibraryImporter>();
+            services.AddTransient<IRawParser, RawParser>();
+            services.AddTransient<IRecipeImporter, RecipeImporter>();
+            services.AddTransient<IUnitImporter, UnitImporter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
