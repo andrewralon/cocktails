@@ -44,7 +44,7 @@ namespace Take02.Import
             return (await _context
             .Unit
             .ToListAsync())
-            .ToDictionary(a => a.Name, a => a.Id);
+            .ToDictionary(a => a.Name ?? "-", a => a.Id);
         }
     }
 }
