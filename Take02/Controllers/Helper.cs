@@ -288,24 +288,6 @@ namespace Take02.Controllers
             return model;
         }
 
-        public static async Task<List<RecipeViewModel>> GetRecipeViewModelsAsync(CocktailsContext _context, bool includeIngredients = false)
-        {
-            var recipes = await GetRecipesAsync(_context);
-
-            var models = recipes.Select(t => GetRecipeViewModelAsync(_context, t.Id).Result).ToList();
-
-            if (includeIngredients)
-            {
-                foreach (var model in models)
-                {
-                    model.IngredientViewModels = await GetIngredientViewModelsByRecipeAsync(_context, model.Id);
-                    model.ShowIngredients = includeIngredients;
-                }
-            }
-
-            return models;
-        }
-
         #endregion ViewModel Methods
 
         #region SelectListItems Methods

@@ -30,6 +30,7 @@ namespace Take02.ViewModels
 
         public bool IsFirstIngredient { get; set; }
 
+        // TODO: these values should come from ViewData, not the ViewModel
         public List<SelectListItem> ComponentSelectListItems { get; set; }
 
         public List<SelectListItem> RecipeSelectListItems { get; set; }

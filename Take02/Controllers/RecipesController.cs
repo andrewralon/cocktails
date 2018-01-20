@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Take02.Models;
+using Take02.Services;
 using Take02.ViewModels;
 
 namespace Take02.Controllers
@@ -13,17 +15,70 @@ namespace Take02.Controllers
     public class RecipesController : Controller
     {
         private readonly CocktailsContext _context;
+        private readonly IRecipeService _recipeService;
+        private readonly ILibraryService _libraryService;
 
-        public RecipesController(CocktailsContext context)
+        public RecipesController(CocktailsContext context, IRecipeService recipeService,
+                                 ILibraryService libraryService)
         {
             _context = context;
+            _recipeService = recipeService;
+            _libraryService = libraryService;
         }
 
         // GET: Recipes
         public async Task<IActionResult> Index(bool showIngredients = false)
         {
-            var models = await Helper.GetRecipeViewModelsAsync(_context, showIngredients);
-            return View(models);
+            var stopwatch = Stopwatch.StartNew();
+
+            var allRecipesTask = _recipeService.GetAllRecipesAsync();
+            var allLibrariesTask = _libraryService.GetAllLibrariesAsync();
+            var allMixTypesTask = _recipeService.GetAllMixTypesAsync();
+            var allUnitsTask = _recipeService.GetAllUnitsAsync();
+            var allComponentsTask = _recipeService.GetAllComponentsAsync();
+
+            Task<ICollection<Ingredient>> allIngredientsTask;
+            if(showIngredients)
+            {
+                allIngredientsTask = _recipeService.GetAllIngredientsAsync();
+            }
+            else
+            {
+                allIngredientsTask = Task.FromResult((ICollection<Ingredient>)new Ingredient[0]);
+            }
+
+            await Task.WhenAll(allRecipesTask, allLibrariesTask, 
+                               allMixTypesTask, allIngredientsTask,
+                               allUnitsTask, allComponentsTask);
+
+            var ingredientsByRecipeId = allIngredientsTask
+            .Result
+            .GroupBy(a => a.RecipeId)
+            .ToDictionary(a => a.Key, a => a.OrderBy(b => b.Number).ToList());
+
+            var viewModels = allRecipesTask.Result.Select(recipe =>
+            {
+                var library = allLibrariesTask.Result.Single(a => a.Id == recipe.LibraryId);
+                var mixType = allMixTypesTask.Result.Single(a => a.Id == recipe.MixTypeId);
+
+                var viewModel = new RecipeViewModel(recipe, library, mixType);
+
+                if(showIngredients && ingredientsByRecipeId.ContainsKey(recipe.Id))
+                {
+                    var ingredients = ingredientsByRecipeId[recipe.Id].Select(ingredient =>
+                    {
+                        var component = allComponentsTask.Result.Single(a => a.Id == ingredient.ComponentId);
+                        var unit = allUnitsTask.Result.Single(a => a.Id == ingredient.UnitId);
+
+                        return new IngredientViewModel(ingredient, recipe, component, unit);
+                    });
+
+                    viewModel.IngredientViewModels = ingredients.ToList();
+                }
+
+                return viewModel;
+            });
+            return View(viewModels.ToList());
         }
 
         // GET: Recipes/Details/5
