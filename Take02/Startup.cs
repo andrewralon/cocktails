@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Take02.Models;
 using Take02.Import;
+using Take02.Models;
+using Take02.Services;
 
 namespace Take02
 {
@@ -38,6 +39,9 @@ namespace Take02
             services.AddTransient<IRawParser, RawParser>();
             services.AddTransient<IRecipeImporter, RecipeImporter>();
             services.AddTransient<IUnitImporter, UnitImporter>();
+
+            services.AddTransient<IRecipeService, RecipeService>();
+            services.AddTransient<ILibraryService, LibraryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
