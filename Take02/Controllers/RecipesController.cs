@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -29,8 +28,6 @@ namespace Take02.Controllers
         // GET: Recipes
         public async Task<IActionResult> Index(bool showIngredients = false)
         {
-            var stopwatch = Stopwatch.StartNew();
-
             var allRecipesTask = _recipeService.GetAllRecipesAsync();
             var allLibrariesTask = _libraryService.GetAllLibrariesAsync();
             var allMixTypesTask = _recipeService.GetAllMixTypesAsync();
