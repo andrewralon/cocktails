@@ -27,10 +27,8 @@ namespace Take02
         {
             services.AddMvc();
 
-            GetConfig();
-
-            var cocktailsConnectionString = Configuration.GetConnectionString("CocktailsDatabase");
-            services.AddDbContext<CocktailsContext>(options => options.UseSqlServer(cocktailsConnectionString));
+            services.AddDbContext<CocktailsContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("CocktailsConnection")));
 
             // Importer and dependencies
             services.AddTransient<IImporter, Importer>();
@@ -40,6 +38,7 @@ namespace Take02
             services.AddTransient<IRecipeImporter, RecipeImporter>();
             services.AddTransient<IUnitImporter, UnitImporter>();
 
+            // Application services
             services.AddTransient<IRecipeService, RecipeService>();
             services.AddTransient<ILibraryService, LibraryService>();
         }
@@ -65,17 +64,6 @@ namespace Take02
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
-
-        public static IConfiguration GetConfig()
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(System.AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json",
-                optional: true,
-                reloadOnChange: true);
-
-            return builder.Build();
         }
     }
 }

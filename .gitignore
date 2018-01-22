@@ -289,3 +289,18 @@ __pycache__/
 
 # Stupid MacOS
 *.DS_Store
+
+# Ignore appsettings
+**/appsettings.development.json
+**/appsettings.staging.json
+**/appsettings.production.json
+
+# Ignore connectionstrings
+**/connectionstrings.development.json
+**/connectionstrings.staging.json
+**/connectionstrings.production.json
+
+# Ignore mailsettings
+**/mailsettings.development.json
+**/mailsettings.staging.json
+**/mailsettings.production.json
