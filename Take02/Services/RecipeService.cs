@@ -22,6 +22,8 @@ namespace Take02.Services
 
         Task<ICollection<Component>> GetAllComponentsAsync();
         Task<ICollection<Unit>> GetAllUnitsAsync();
+
+        Task<ICollection<Recipe>> GetAllRecipesByLibraryAsync(Guid libraryId);
     }
 
     public class RecipeService : IRecipeService
@@ -59,6 +61,15 @@ namespace Take02.Services
         public async Task<ICollection<Unit>> GetAllUnitsAsync()
         {
             return (await _db.Unit.ToListAsync());
+        }
+
+        public async Task<ICollection<Recipe>> GetAllRecipesByLibraryAsync(Guid libraryId)
+        {
+            return (await _db
+                .Recipe
+                .Where(t => t.LibraryId == libraryId)
+                .OrderBy(t => t.Name)
+                .ToListAsync());
         }
     }
 }

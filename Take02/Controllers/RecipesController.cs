@@ -78,6 +78,64 @@ namespace Take02.Controllers
             return View(viewModels.ToList());
         }
 
+        // GET: Recipes/Library/{guid}
+        public async Task<IActionResult> Library(Guid? id, bool showIngredients = true)
+        {
+            var libraryTask = _libraryService.GetLibraryAsync(id.Value);
+            var allRecipesByLibraryTask = _recipeService.GetAllRecipesByLibraryAsync(id.Value);
+            var allMixTypesTask = _recipeService.GetAllMixTypesAsync();
+            var allUnitsTask = _recipeService.GetAllUnitsAsync();
+            var allComponentsByLibraryTask = _recipeService.GetAllComponentsAsync();
+
+            Task<ICollection<Ingredient>> allIngredientsByLibraryTask;
+            if (showIngredients)
+            {
+                allIngredientsByLibraryTask = _recipeService.GetAllIngredientsAsync();//.GetAllIngredientsByLibraryAsync(id.Value);
+            }
+            else
+            {
+                allIngredientsByLibraryTask = Task.FromResult((ICollection<Ingredient>)new Ingredient[0]);
+            }
+
+            await Task.WhenAll(libraryTask, allRecipesByLibraryTask,
+                allMixTypesTask, allIngredientsByLibraryTask,
+                allUnitsTask, allComponentsByLibraryTask);
+
+            var allRecipeIdsByLibrary = allRecipesByLibraryTask
+                .Result
+                .Select(a => a.Id)
+                .ToList();
+
+            var ingredientsByRecipeId = allIngredientsByLibraryTask
+            .Result
+            .Where(a => allRecipeIdsByLibrary.Contains(a.RecipeId))
+            .GroupBy(a => a.RecipeId)
+            .ToDictionary(a => a.Key, a => a.OrderBy(b => b.Number).ToList());
+
+            var viewModels = allRecipesByLibraryTask.Result.Select(recipe =>
+            {
+                var mixType = allMixTypesTask.Result.Single(a => a.Id == recipe.MixTypeId);
+
+                var viewModel = new RecipeViewModel(recipe, libraryTask.Result, mixType);
+
+                if (showIngredients && ingredientsByRecipeId.ContainsKey(recipe.Id))
+                {
+                    var ingredients = ingredientsByRecipeId[recipe.Id].Select(ingredient =>
+                    {
+                        var component = allComponentsByLibraryTask.Result.Single(a => a.Id == ingredient.ComponentId);
+                        var unit = allUnitsTask.Result.Single(a => a.Id == ingredient.UnitId);
+
+                        return new IngredientViewModel(ingredient, recipe, component, unit);
+                    });
+
+                    viewModel.IngredientViewModels = ingredients.ToList();
+                }
+
+                return viewModel;
+            });
+            return View(viewModels.ToList());
+        }
+
         // GET: Recipes/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

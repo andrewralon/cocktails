@@ -9,7 +9,7 @@
         @foreach(var library in Model.TopLibraries)
         {
             <li>
-                <a asp-controller="Libraries" asp-action="Details" asp-route-id="@library.LibraryId">@library.LibraryName (@library.RecipeCount Recipes)</a>
+                <a asp-controller="Recipes" asp-action="Library" asp-route-id="@library.LibraryId">@library.LibraryName (@library.RecipeCount Recipes)</a>
             </li>
         }
     </ul>
