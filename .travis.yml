@@ -3,7 +3,6 @@ sudo: required
 mono: none
 dotnet: 2.1.2
 script:
-  - xbuild /p:Configuration=Release Take02.sln
   - dotnet restore
+  - dotnet build --configuration "Release"
   - dotnet test Take02.Tests
-
