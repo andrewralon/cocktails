@@ -2,9 +2,8 @@ language: csharp
 sudo: required
 mono: none
 dotnet: 2.1.2
-install:
-  - dotnet install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release Take02.sln
   - dotnet restore
-  - mono ./testrunner/xunit.runners.*/tools/xunit.console.clr4.exe ./Take02.Tests/bin/Release/Take02.Tests.dll
+  - dotnet test Take02.Tests
+
