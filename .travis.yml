@@ -3,8 +3,7 @@ sudo: required
 mono: none
 dotnet: 2.1.2
 install:
-  - nuget restore Take02.sln
-  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+  - dotnet install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release Take02.sln
   - dotnet restore
