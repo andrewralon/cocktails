@@ -27,8 +27,8 @@ namespace Take02
         {
             services.AddMvc();
 
-            services.AddDbContext<CocktailsContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("CocktailsConnection")));
+            var cocktailsConnection = Configuration.GetConnectionString("CocktailsConnection");
+            services.AddDbContext<CocktailsContext>(options => options.UseSqlServer(cocktailsConnection));
 
             // Importer and dependencies
             services.AddTransient<IImporter, Importer>();
