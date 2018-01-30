@@ -3,6 +3,8 @@ sudo: required
 mono: none
 dotnet: 2.1.2
 script:
+  - sed -i.backup -e 's/__COCKTAILS_CONNECTION_STRING__/'"$COCKTAILS_CONNECTION_STRING"'/g' Take02/appsettings.Release.json
+  - cat Take02/appsettings.json
   - dotnet restore
   - dotnet build --configuration "Release"
   - dotnet test Take02.Tests
@@ -13,11 +15,5 @@ after_success:
   - eval $(aws ecr get-login --no-include-email --region $AWS_REGION)
   - cd Take02
   - docker build -t cocktails .
-  - docker tag cocktails:latest $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/cocktails:latest
-  - docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/cocktails:latest
-env:
-  global:
-  - secure: BOY5weUe886405c27iX37+x+NDtYhMI0ax5T3MHV6fCjaBgqTa+fqvE42fgoytzkPhfsedynpntTl0uBEpkINpynK+YbXRKj+gPjwnA1di6Y+rvgUogl7+PkFIms9yapFwrSLZDHijy19GbP+hKxL1Eak0vu3aXhPzK3p2s1JIJlxBdNnzeHEfQWKck5HuSDPBwOoaZUMP8KrBUs/D69VffuDMETigiZj/i6/lhUdYvvwj/bwanMKhe3Z6Rkv3aU53KQdMBEyAocurq+d2frL5tNNBs9UCYXpYfML2SBxOiS1xknntYZencL9UAFYCvL++mlkw7yJLI+MUbdZw7C3HHlaSks3RcVwCsS88zGfERNtJFsQXcqGx06YfH3lO9Sb8+871358tXr9LpwrIvtSFT/Dwj3up/rKMbhx9/MECLmO9mV9hKFcEDDKk7EugWPKx/WKmDO0RGrWCP5XLR/OWTNVMU3eNF7val6eiEgbrFdQ0IEpgyZf2cdocZivFebM9poh6bRYc8HiwgPjgJNmYig5mUHajdTF2DJ4MN0lGVgBInvglx20eyyVnlzrJPvAUnhync0eh+Z0fB+cTUoDHmBN0O+whw5wRyrxD5O3exZYsn9+ek7f/aVqKpaxEML0aUr5vs7sJHKX+ss+C2i9kDxOsx5sgVdERIzP1XxT/Y=
-  - secure: 3NKvaGvGhf0m+alksWNjjmOUWtSFDlhfkjSBd005KjAvQi93w1/tzO476gvPDgNSGGbjEkzcixAPOyss8HAueRoZJDJ9EXV8D+7NYLtX9b8gtof46PF2pjFw5pQhwsdVRjEcFiBCaA7v/Ehp1Rgg7AjC0C48KYNWKhxuU5v52+3YjrnLRPWplAHHxyjA+AGAQyFgrm+yJ9FxGTwh3P9ud30oSNxD7XqhZ7SU2Lhz7a3Ej9nZyZiH1gxbF4pA71w3WjSaLbtAjpbkM5MTUWOEplO7UQbdfdiNiaemxM0Ur2odEDLooGuLdGGzaqHW8Ei0L3m6HdBLwKEFIRNsl2QUqHQHqiHxC2xUtF3tCechSLaWXLbM/ZPv5MUUqVpw3NuBwYfnWSpmB1I55zyZa56oubstHkDifyhb4UV7cvsV+0xnYl66/oVti/D/a0tU4q15eu2poZS+aX5nq9zoOmRi36v8PNZb1cifb7y8eqbPQqtq8mZltvkJ6QibdWdStpWTlNJ+fXiLBn9v0Uo/Xl1dwAxcl/3NYuPeAxD8/BoUiEqQLO4MK9Wh7AYTu5/jS5j5W+xm7WE87setRppfJpu/Mb+06jhbjoYAZq6KTPOyQ6oZRcssZu0uPvTpWLHvsh6JXxTolszta7DXb5DxgLpyeWY9Qelt4osrK/Y+pKLXT34=
-  - secure: d7CbdgSC67StGslmhS4p/TjRzNZbdTx6cvcpIny/ZYa8nbGmJC73v70tO+yoAMLFAs7FJmLnUUMLhfAReRx8UfxoSN1D/F6omo2Yk7Lpya1Mg28T7vH3sz0/KjOww+Xa49MKb9U/UiDZ6oFAUE0BoCC2l9s/e0+0sus3jDwe96tekJ1QcGNqXzbHkY88wJ0qrRXlVp8438vjqyD0/zvcywCXM2/vFdY3eRIC8cYDOmlropP3hrCiyPlxuXaXZMvSYQ/ua4TtglyXtou5lY+Cwl5Pf9qhVBALrzuKyrD8K5DK7Ebk9tMS9ohAkSNFcIOCjjdhB8k2O4HQOKh4/rCU2Oybd9RXJQi7muc4eLVEQF08eo/711IaCAzzdx6teTw6jLcPsfQWzd2ESa90Mt9wQYJyUmvA+lUaC0psRSFLZ1ptgcUwwmOVPA57EVYCoC8tOdWaMVnFInl+mfQF7n9Smsw5Mb4HuckyY1ZwlHvr0LSmIjGrPAKSJcoVXE2X7TQp6JgJyW+5fCwPVxYoQNcZutFMzth9Tu9JEjWdsLyotSJx2qwvbyrynW5a/2Af9xX4XbG0WDRx1i6+41pclZVSrpuxWbpNhW+/tg4fNcd+mdbIFpbgwlvMqJemc/gjJDq4sNLJX1JNTOPwdg3/O9nGhX+ZisvJ9n3IZ0HX50Uvkjc=
-  - secure: f+M5Q7swiMcVrJf8+rl/I6s+W+Ma1Of84aaVg8nSyx1JgS+/tvqcy+y2GpumnxVzuQqyNSf/oQnZ6O6YDCnyGS7dc48vozXane4a41II2NYMbEQYlM2AO/w0In4nzbB9ZVJEtDNowttn+bOKDt6r+yL5roGFDAjT9soiKCQhqtoNcMD+XmLQfvzKuDW8OaLLstbIT3HlySirHSSccQHsl57fYLkb/TR2Np4+hpmIEaTWoGQLtBaxavR7RUGO7uXpAlflITKGfAYScR2xYKq2kjDZeLZxqyjsQHU+JXUcHXp+SVOFAmg05lbUHYB4Aih1hT+4BQGJ8lNHLqOjI5Se/xQOlxo03zY2zhEQxsDdGv+GKZfYMm2nN8MR+5pIwFHyVbjmL4ecLIxTtNAqJq45Z5V05CJMI/VttZ9OLdSabI3/XykItPa3SLEjPb2VS65FTf8Gn+wT3deS3JbUZtMU7EyUgzZsaE/AELj4Bs5lGoPSGoPYuhHuKi9ctrzwxf4+2dM53GGUHYAY6eTZvI9TU7uxAOGnflG4+rtguATq+WQbOa5UtzgmJCeTWMr1nwuhFd+tB05MagJ4pDqu5aevIe5u11QzfPszfTf4L2WAGSAnijbNXnjsDe7ngwxcEl7k9dC95EAkpbCru7cWFNZvjPI7JORuhuq6a3TxTX0WU1Y=
+  - docker tag cocktails:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cocktails:latest
+  - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cocktails:latest
