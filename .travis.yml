@@ -6,6 +6,10 @@ script:
   - echo "$COCKTAILS_CONNECTION_STRING"
   - sed -i.backup -e 's/__COCKTAILS_CONNECTION_STRING__/'"$COCKTAILS_CONNECTION_STRING"'/g' Take02/appsettings.Release.json
   - cat Take02/appsettings.Release.json
+  - sed -i.backup -e 's/__COCKTAILS_CONNECTION_STRING__/'"$COCKTAILS_CONNECTION_STRING"'/g' Take02/appsettings.Development.json
+  - cat Take02/appsettings.Development.json
+  - sed -i.backup -e 's/__COCKTAILS_CONNECTION_STRING__/'"$COCKTAILS_CONNECTION_STRING"'/g' Take02/appsettings.json
+  - cat Take02/appsettings.json
   - dotnet restore
   - dotnet build --configuration "Release" --no-restore
   - dotnet test Take02.Tests
