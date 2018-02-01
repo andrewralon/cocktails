@@ -3,6 +3,22 @@ sudo: required
 mono: none
 dotnet: 2.1.2
 script:
+  - echo "$COCKTAILS_CONNECTION_STRING"
+  - sed -i.backup -e 's/__COCKTAILS_CONNECTION_STRING__/'"$COCKTAILS_CONNECTION_STRING"'/g' Take02/appsettings.Release.json
+  - cat Take02/appsettings.Release.json
+  - sed -i.backup -e 's/__COCKTAILS_CONNECTION_STRING__/'"$COCKTAILS_CONNECTION_STRING"'/g' Take02/appsettings.Development.json
+  - cat Take02/appsettings.Development.json
+  - sed -i.backup -e 's/__COCKTAILS_CONNECTION_STRING__/'"$COCKTAILS_CONNECTION_STRING"'/g' Take02/appsettings.json
+  - cat Take02/appsettings.json
   - dotnet restore
-  - dotnet build --configuration "Release"
+  - dotnet build --configuration "Release" --no-restore
   - dotnet test Take02.Tests
+after_success:
+  - docker --version
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - eval $(aws ecr get-login --no-include-email --region $AWS_REGION)
+  - cd Take02
+  - docker build -t cocktails .
+  - docker tag cocktails:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cocktails:latest
+  - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cocktails:latest
