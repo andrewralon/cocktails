@@ -26,6 +26,11 @@ SELECT i.Id, r.Name, c.Name, i.Quantity, i.UnitId, i.Number
   JOIN Component c ON c.Id = ComponentId
   WHERE i.Id = '8de9a849-b065-4dc3-8089-7d56ecfa8048'
 
-
 SELECT * FROM Recipe;
 SELECT * FROM Component;
+
+-- Get recipes count by library
+SELECT l.Name, COUNT(r.Id)
+FROM Recipe r
+JOIN Library l ON l.Id = r.LibraryId
+GROUP BY l.Name;
